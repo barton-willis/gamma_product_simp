@@ -11,7 +11,7 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
  load("opsubst");
        
  /* Return a lambda form that generates the Gauss gamma function 
- identity; see http://dlmf.nist.gov/5.5.E6 */
+ product identity; see http://dlmf.nist.gov/5.5.E6 */
 
  make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
     lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
