@@ -51,6 +51,6 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
           ee : ratsubst(rhs(id), lhs(id), e),
           if is(e # ee) then repeat : true,
           e : ee)), 
-    /* When the expresion changed repeat, otherwise return.*/        
-    if repeat then  gamma_product_simp(e) else e)$
+    /* When the expresion has changed, recurse; otherwise return e.*/        
+    if repeat then gamma_product_simp(e) else e)$
               
