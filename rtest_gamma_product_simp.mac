@@ -1,0 +1,251 @@
+
+/* 22 July 2022
+
+Tests adapted from SymPy; see https://github.com/sympy/sympy/blob/master/sympy/simplify/tests/test_gammasimp.py 
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+  a. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+  b. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+  c. Neither the name of SymPy nor the names of its contributors
+     may be used to endorse or promote products derived from this software
+     without specific prior written permission.
+
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGE.
+
+--------------------------------------------------------------------------------
+
+Patches that were taken from the Diofant project (https://github.com/diofant/diofant)
+are licensed as:
+
+Copyright (c) 2006-2018 SymPy Development Team,
+              2013-2022 Sergey B Kirpichev
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+  a. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+  b. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+  c. Neither the name of Diofant or SymPy nor the names of its contributors
+     may be used to endorse or promote products derived from this software
+     without specific prior written permission.
+
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGE.
+
+*/
+
+(load("C:/Users/Barton/Downloads/gamma_product_simp.mac"),0);
+0$
+
+gamma_product_simp(gamma(x));
+gamma(x)$
+
+gamma_product_simp(gamma(x + 1)/x);
+gamma(x)$
+
+gamma_product_simp(gamma(x)/(x - 1));
+gamma(x - 1)$
+
+gamma_product_simp(x*gamma(x));
+gamma(x + 1)$
+
+gamma_product_simp((x + 1)*gamma(x + 1));
+gamma(x + 2)$
+
+gamma_product_simp(gamma(x + y)*(x + y));
+gamma(x + y + 1)$
+
+gamma_product_simp(x/gamma(x + 1));
+1/gamma(x)$
+
+gamma_product_simp((x + 1)^2/gamma(x + 2));
+(x + 1)/gamma(x + 1)$
+
+gamma_product_simp(x*gamma(x) + gamma(x + 3)/(x + 2));
+(x + 2)*gamma(x + 1)$
+
+gamma_product_simp(gamma(2*x)*x);
+gamma(2*x + 1)/2$
+
+gamma_product_simp(gamma(2*x)/(x - 1/2));
+2*gamma(2*x - 1)$
+
+gamma_product_simp(gamma(x)*gamma(1 - x));
+%pi/sin(%pi*x)$
+
+gamma_product_simp(gamma(x)*gamma(-x));
+-(%pi/(x*sin(%pi*x)))$
+
+gamma_product_simp(1/gamma(x + 3)/gamma(1 - x));
+sin(%pi*x)/(%pi*x*(x + 1)*(x + 2))$
+
+gamma_product_simp((n + 2)!);
+gamma(n + 3)$
+
+gamma_product_simp(binomial(n, k));
+gamma(n + 1)/(gamma(k + 1)*gamma(-k + n + 1))$
+
+gamma_product_simp(gamma(x)*gamma(x + 1/2)*gamma(y)/gamma(x + y));
+2^(-2*x + 1)*sqrt(%pi)*gamma(2*x)*gamma(y)/gamma(x + y)$
+
+gamma_product_simp(1/gamma(x)/gamma(x - 1/3)/gamma(x + 1/3)); 
+3^(3*x - 3/2)/(2*%pi*gamma(3*x - 1))$
+
+gamma_product_simp(gamma(1/2 + x/2)*gamma(1 + x/2)/gamma(1 + x)/sqrt(%pi)*2**x);
+1$
+
+gamma_product_simp(gamma(-1/4)*gamma(-3/4));
+16*sqrt(2)*%pi/3$
+
+gamma_product_simp(gamma(2*x)/gamma(x));
+2^(2*x - 1)*gamma(x + 1/2)/sqrt(%pi)$
+
+(e : (-gamma(k)*gamma(k + 2) + gamma(k + 1)^2)/gamma(k)^2,0);
+0$
+
+gamma_product_simp(e);
+-k$
+
+gamma_product_simp(1/e);
+-1/k$
+
+(e : (gamma(x) + gamma(x + 1))/gamma(x),0);
+0$
+
+gamma_product_simp(e);
+x + 1$
+
+gamma_product_simp(1/e);
+1/(x + 1)$
+
+(e : (gamma(x) + gamma(x + 2))*(gamma(x - 1) + gamma(x))/gamma(x),0);
+0$
+
+gamma_product_simp(e);
+(x^2 + x + 1)*gamma(x + 1)/(x - 1)$
+
+(e : (-gamma(k)*gamma(k + 2) + gamma(k + 1)^2)/gamma(k)^2,0);
+0$
+
+gamma_product_simp(e^2);
+k^2$
+
+gamma_product_simp(e^2/gamma(k + 1));
+k/gamma(k)$
+
+/* not sure
+    a = R(1, 2) + R(1, 3)
+    b = a + R(1, 3)
+    assert gamma_product_simp(gamma(2*k)/gamma(k)*gamma(k + a)*gamma(k + b)
+        ) == 3*2**(2*k + 1)*3**(-3*k - 2)*sqrt(%pi)*gamma(3*k + R(3, 2))/2
+*/
+gamma_product_simp((x + 1)*factorial(x)/gamma(y));
+gamma(x + 2)/gamma(y)$
+
+/* I guess that rf is the pochhammer symbol. 
+gamma_product_simp(rf(x + n, k)*binomial(n, k)).simplify() == Piecewise(
+        (gamma(n + 1)*gamma(k + n + x)/(gamma(k + 1)*gamma(n + x)*gamma(-k + n + 1)), n > -x),
+        ((-1)**k*gamma(n + 1)*gamma(-n - x + 1)/(gamma(k + 1)*gamma(-k + n + 1)*gamma(-k - n - x + 1)), True))
+*/
+
+/* I'm lost here:
+    A, B = symbols('A B', commutative=False)
+    assert gamma_product_simp(e*B*A) == gamma_product_simp(e)*B*A
+*/
+
+gamma_product_simp(gamma(2*k)/gamma(k)*gamma(-k - 1/2));
+ (-2**(2*k + 1)*sqrt(%pi)/(2*((2*k + 1)*cos(%pi*k))))$
+
+gamma_product_simp(gamma(k)*gamma(k + 1/3)*gamma(k + 2/3))/gamma(k*3/2);
+(3*2**(3*k + 1)*3**(-3*k - 1/2)*sqrt(%pi)*gamma(k*3/2 + 1/2)/2)$
+
+gamma_product_simp(gamma(1/4)/gamma(5/4));
+4$
+
+gamma_product_simp(binomial(n + 2, k + 1/2));
+gamma(n + 3)/ (gamma(k + 3/2)*gamma(-k + n + 5/2))$
+
+gamma_product_simp(binomial(n + 2, k + 2.0));
+gamma(n + 3)/(gamma(k + 3.0)*gamma(-k + n + 1))$
+
+gamma_product_simp(binomial(0, x));
+sin(%pi*x)/(%pi*x)$
+
+(e : gamma(n + 1/3)*gamma(n + 2/3),0);
+0$
+
+gamma_product_simp(e);
+gamma(n + 1/3)*gamma(n + 2/3)$
+
+gamma_product_simp(gamma(4*n + 1/2)/gamma(2*n - 3/4));
+2**(4*n - 5/2)*(8*n - 3)*gamma(2*n + 3/4)/sqrt(%pi)$
+
+(e : gamma(exp(i)),0);
+0$
+
+gamma_product_simp(e);
+gamma(exp(i))$
+
+(e : gamma(m + 3),0);
+0$
+
+gamma_product_simp(e);
+ gamma(m + 3)$
+
+(e : gamma(m + 1)/(gamma(i + 1)*gamma(-i + m + 1)),0);
+0$
+
+gamma_product_simp(e);
+gamma(m + 1)/(gamma(i + 1)*gamma(-i + m + 1))$
+
+(declare(p,integer), assume(p>0),0);
+0$
+
+gamma_product_simp(gamma(-p + 4));
+gamma(-p + 4)$
+
+/* not sure
+
+def test_issue_22606():
+    fx = Function('f')(x)
+    eq = x + gamma(y)
+    # seems like ans should be `eq`, not `(x*y + gamma(y + 1))/y`
+    ans = gamma_product_simp(eq)
+    assert gamma_product_simp(eq.subs(x, fx)).subs(fx, x) == ans
+    assert gamma_product_simp(eq.subs(x, cos(x))).subs(cos(x), x) == ans
+    assert 1/gamma_product_simp(1/eq) == ans
+    assert gamma_product_simp(fx.subs(x, eq)).args[0] == ans
+*/

@@ -1,0 +1,47 @@
+ load("opsubst");
+       
+ /* Return a Gauss gamma function identity; see http://dlmf.nist.gov/5.5.E6 */
+
+
+ make_gamma_product_id() := buildq([x : gensym(),k : gensym(),n : gensym()],
+    lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))))
+    ;
+
+ gamma_product_simp(e) := block([a,repeat : false,ee,dn,fn],
+    e : makegamma(e), /* not sure I like this */
+    e : ratsimp(e),
+    a : map('first, gatherargs(e,'gamma)),
+    N : length(a),
+
+    /* When n is a positive integer and the expression e involves both
+       gamma(X+n) and gamma(X), do gamma(X+n) ==> pochhammer(X,n) gamma(X).
+       The expansion of the pochhammer term is controled by the option variable
+       pochhammer_max_index (default 100). */
+    for ak in a do (
+     for bk in a do (
+        if featurep(ak-bk,'integer) and ak-bk > 0 then (
+            e : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e),
+            repeat : true))),
+
+    /* Do gamma(X) gamma(n-X) ==> pochhammer(1-X,n-1) %pi/sin(%pi X), when
+       n is explicitly a nonnegative integer. */
+    for ak in a do (
+        for bk in a do (
+        dn : ak+bk,
+        if integerp(dn) and dn >= 0 and (not featurep(ak,'integer)) then (
+            repeat : true,
+            e : ratsubst(pochhammer(1-ak, dn-1) *%pi/sin(%pi*ak),
+                gamma(ak)*gamma(bk),e)))),
+
+    /* Do prod(gamma(x+k/n),k,0,n-1) ==> gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))
+    */
+    fn :  make_gamma_product_id(),
+    for ak in a do (
+       for n : 2 thru N do (
+          id : ratsimp(fn(ak,n)),
+          ee : ratsubst(rhs(id), lhs(id), e),
+          if is(e # ee) then repeat : true,
+          e : ee)), 
+    /* When the expresion changed repeat, otherwise return.*/        
+    if repeat then  gamma_product_simp(e) else e)$
+              
