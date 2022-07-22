@@ -13,10 +13,10 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
  /* Return a lambda form that generates the Gauss gamma function 
  identity; see http://dlmf.nist.gov/5.5.E6 */
 
- make_gamma_product_id() := buildq([x : gensym(),k : gensym(),n : gensym()],
+ make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
     lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
 
- gamma_product_simp(e) := block([a,repeat : false,ee,dn,fn],
+ gamma_product_simp(e) := block([a,N,repeat : false,ee,dn,fn],
     e : makegamma(e), /* not sure I like this */
     e : ratsimp(e),
     a : map('first, gatherargs(e,'gamma)),
@@ -44,7 +44,7 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
 
     /* Do prod(gamma(x+k/n),k,0,n-1) ==> gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))
     */
-    fn :  make_gamma_product_id(),
+    fn : make_gamma_product_id(),
     for ak in a do (
        for n : 2 thru N do (
           id : ratsimp(fn(ak,n)),
