@@ -67,7 +67,7 @@ DAMAGE.
 
 */
 
-(load("C:/Users/Barton/Downloads/gamma_product_simp.mac"),0);
+(load("gamma_product_simp"),0);
 0$
 
 gamma_product_simp(gamma(x));
