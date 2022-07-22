@@ -9,7 +9,8 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
 */
  
  load("opsubst");
-       
+ load("op_predicates");
+
  /* Return a lambda form that generates the Gauss gamma function 
  product identity; see http://dlmf.nist.gov/5.5.E6 */
 
@@ -18,7 +19,7 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
 
  gamma_product_simp(e) := block([a,N,repeat : false,ee,dn,fn],
     e : makegamma(e), /* not sure I like this */
-    e : ratsimp(e),
+    e : ratsimp(gamma_arg_simp(e)),
     a : map('first, gatherargs(e,'gamma)),
     N : length(a),
 
@@ -29,8 +30,9 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
     for ak in a do (
      for bk in a do (
         if featurep(ak-bk,'integer) and ak-bk > 0 then (
-            e : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e),
-            repeat : true))),
+            ee : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e),
+            if is(e # ee) then repeat : true,
+            e : ee))),
 
     /* Do gamma(X) gamma(n-X) ==> pochhammer(1-X,n-1) %pi/sin(%pi X), when
        n is explicitly a nonnegative integer. */
@@ -53,4 +55,16 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
           e : ee)), 
     /* When the expresion has changed, recurse; otherwise return e.*/        
     if repeat then gamma_product_simp(e) else e)$
+
+gamma_arg_simp(e) := block([a,repeat : false,ee],
+  if mapatom(e) then e
+  elseif mtimesp(e) then (
+     a : map('first, gatherargs(e,'gamma)),
+     for ak in a do (
+        if member(ak,e) then (
+            ee : ratsubst(gamma(ak+1), ak*gamma(ak),e), 
+            if is(e # ee) then repeat : true,
+            e : ee)),
+      if repeat then gamma_arg_simp(e) else e)
+  else map('gamma_arg_simp, e));    
               
