@@ -66,16 +66,14 @@ ratsimp_gamma_args(e) := block([inflag : true],
 /* Do X*gamma(X) ==> gamma(X+1). Repeat until there are no more such terms. 
    See http://dlmf.nist.gov/5.5.E1 */
 
-gamma_arg_increase(e) := block([a,repeat : false,ee],
+gamma_arg_increase(e) := block([a,ee : e],
   if mapatom(e) then e
   elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),
      for ak in a do (
         if member(ak,e) then (
-            ee : ratsubst(gamma(ak+1), ak*gamma(ak),e), 
-            if is(e # ee) then repeat : true,
-            e : ee)),
-      if repeat then gamma_arg_increase(e) else e)
+            e : ratsubst(gamma(ak+1), ak*gamma(ak),e))),            
+      if is(e # ee) then gamma_arg_increase(e) else e)
   else map('gamma_arg_increase, e)); 
 
 /* Do gamma(X+1)/X ==> gamma(X). Repeat until there are no more
@@ -85,16 +83,14 @@ gamma_arg_increase(e) := block([a,repeat : false,ee],
        
    I should fix that.*/
 
-gamma_arg_decrease(e) := block([a,repeat : false,ee],
+gamma_arg_decrease(e) := block([a, ee : e],
   if mapatom(e) then e
   elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),
      for ak in a do (
         if member(1/(ak-1),e) then (
-            ee : ratsubst(gamma(ak-1), gamma(ak)/(ak-1),e), 
-            if is(e # ee) then repeat : true,
-            e : ee)),
-      if repeat then gamma_arg_decrease(e) else e)
+            e : ratsubst(gamma(ak-1), gamma(ak)/(ak-1),e))), 
+      if is(e # ee) then gamma_arg_decrease(e) else e)
   else map('gamma_arg_decrease, e));   
 
 
