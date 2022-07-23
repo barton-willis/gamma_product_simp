@@ -25,6 +25,7 @@ ratsimp_gamma_args(e) := block([inflag : true],
 
  gamma_product_simp(e) := block([a,N,id,repeat : false,ee,dn,fn,keepfloat : true],
     e : ratsimp_gamma_args(makegamma(e)), /* not sure I like this */
+    ee : e,
     e : gamma_arg_increase(gamma_arg_decrease(e)),
     a : map('first, gatherargs(e,'gamma)),
     N : length(a),
@@ -36,9 +37,7 @@ ratsimp_gamma_args(e) := block([inflag : true],
     for ak in a do (
      for bk in a do (
         if featurep(ak-bk,'integer) and ak-bk > 0 then (
-            ee : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e),
-            if is(e # ee) then repeat : true,
-            e : ee))),
+            e : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e)))),
 
      /* Do gamma(X) gamma(n-X) ==> pochhammer(1-X,n-1) %pi/sin(%pi X), when
        n is explicitly a nonnegative integer. */
@@ -46,7 +45,6 @@ ratsimp_gamma_args(e) := block([inflag : true],
         for bk in a do (
         dn : ak+bk,
         if integerp(dn) and dn >= 0 and (not featurep(ak,'integer)) then (
-            repeat : true,
             e : ratsubst(pochhammer(1-ak, dn-1) *%pi/sin(%pi*ak),
                 gamma(ak)*gamma(bk),e)))),
 
@@ -56,11 +54,10 @@ ratsimp_gamma_args(e) := block([inflag : true],
     for ak in a do (
        for n : 2 thru N do (
           id : ratsimp(fn(ak,n)),
-          ee : ratsubst(rhs(id), lhs(id), e),
-          if is(e # ee) then repeat : true,
-          e : ee)), 
-    /* When the expression has changed, recurse; otherwise return e.*/        
-    if repeat then gamma_product_simp(e) else e)$
+          e : ratsubst(rhs(id), lhs(id), e))),
+    /* When the expression has changed, recurse; otherwise return e.*/       
+    if is(e # ee) then gamma_product_simp(e) else e)$
+
 
 /* Do X*gamma(X) ==> gamma(X+1). Repeat until there are no more such terms. 
    See http://dlmf.nist.gov/5.5.E1 */
