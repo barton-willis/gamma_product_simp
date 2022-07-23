@@ -154,8 +154,13 @@ gamma_product_simp(1/e);
 (e : (gamma(x) + gamma(x + 2))*(gamma(x - 1) + gamma(x))/gamma(x),0);
 0$
 
+/*Apparently, SymPy simplifies this to (x^2 + x + 1)*gamma(x + 1)/(x - 1).
+But Maxima gives gamma(x-1)*x^3+gamma(x-1)*x^2+gamma(x-1)*x. Maxima's result
+factors as gamma(x-1)*x*(x^2+x+1). I think Maxima's answer is better. 
+Guess: the difference is due to a fluke in the order of the matching.*/
 gamma_product_simp(e);
-(x^2 + x + 1)*gamma(x + 1)/(x - 1)$
+gamma(x-1)*x^3+gamma(x-1)*x^2+gamma(x-1)*x$
+
 
 (e : (-gamma(k)*gamma(k + 2) + gamma(k + 1)^2)/gamma(k)^2,0);
 0$

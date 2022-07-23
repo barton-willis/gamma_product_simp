@@ -17,15 +17,15 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
  make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
     lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
 
- gamma_product_simp(e) := block([a,N,repeat : false,ee,dn,fn],
+ gamma_product_simp(e) := block([a,N,id,repeat : false,ee,dn,fn,keepfloat : true],
     e : makegamma(e), /* not sure I like this */
-    e : ratsimp(gamma_arg_simp(e)),
+    e : ratsimp(gamma_arg_increase(gamma_arg_decrease(e))),
     a : map('first, gatherargs(e,'gamma)),
     N : length(a),
 
     /* When n is a positive integer and the expression e involves both
        gamma(X+n) and gamma(X), do gamma(X+n) ==> pochhammer(X,n) gamma(X).
-       The expansion of the pochhammer term is controled by the option variable
+       The expansion of the pochhammer term is controlled by the option variable
        pochhammer_max_index (default 100). */
     for ak in a do (
      for bk in a do (
@@ -53,10 +53,12 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
           ee : ratsubst(rhs(id), lhs(id), e),
           if is(e # ee) then repeat : true,
           e : ee)), 
-    /* When the expresion has changed, recurse; otherwise return e.*/        
+    /* When the expression has changed, recurse; otherwise return e.*/        
     if repeat then gamma_product_simp(e) else e)$
 
-gamma_arg_simp(e) := block([a,repeat : false,ee],
+/* Do X*gamma(X) ==> gamma(X+1). Repeat until there are no more such terms. 
+   See http://dlmf.nist.gov/5.5.E1 */
+gamma_arg_increase(e) := block([a,repeat : false,ee],
   if mapatom(e) then e
   elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),
@@ -65,6 +67,26 @@ gamma_arg_simp(e) := block([a,repeat : false,ee],
             ee : ratsubst(gamma(ak+1), ak*gamma(ak),e), 
             if is(e # ee) then repeat : true,
             e : ee)),
-      if repeat then gamma_arg_simp(e) else e)
-  else map('gamma_arg_simp, e));    
+      if repeat then gamma_arg_increase(e) else e)
+  else map('gamma_arg_increase, e)); 
+
+/* Do gamma(X+1)/X ==> gamma(X). Repeat until there are no more
+   such terms. This misses cases such as;
+
+       gamma_arg_decrease(gamma(x+1/2)/((2*x+1)/2))  
+       
+   I should fix that.*/
+  gamma_arg_decrease(e) := block([a,repeat : false,ee],
+  if mapatom(e) then e
+  elseif mtimesp(e) then (
+     a : map('first, gatherargs(e,'gamma)),
+     for ak in a do (
+        if member(1/(ak-1),e) then (
+            ee : ratsubst(gamma(ak-1), gamma(ak)/(ak-1),e), 
+            if is(e # ee) then repeat : true,
+            e : ee)),
+      if repeat then gamma_arg_decrease(e) else e)
+  else map('gamma_arg_decrease, e));   
+
+
               
