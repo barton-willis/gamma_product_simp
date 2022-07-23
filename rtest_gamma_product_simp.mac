@@ -67,7 +67,8 @@ DAMAGE.
 
 */
 
-(load("gamma_product_simp"),0);
+(load("gamma_product_simp"),radsubstflag : true, ratfac : true, domain : real,
+	m1pbranch : false,0);
 0$
 
 gamma_product_simp(gamma(x));
@@ -266,5 +267,20 @@ sin(a+y)-z$
 makelist(subst(x=k/5,X),k,1,16);
 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]$
 
+/* See bug #1. */
+gamma_product_simp(x/gamma(x+1));
+1/gamma(x)$
 
+/* Clean up */
+(remvalue(X,e),0);
+0$
+
+values;
+[]$
+
+contexts;
+[initial,global]$
+
+(reset(radsubstflag,ratfac,domain,m1pbranch),0);
+0$
 
