@@ -14,5 +14,7 @@
 
 (defmfun $mexptp (e) (mexptp e))
 
-(defmfun $mymember (x e) (not (null 
-   (member x (cdr e) :test #'(lambda (x q) (eq t (meqp x q)))))))
+;; Experimental function--Maxima's member tests equality with alike. This
+;; is a bit more powerful, and it's specialized to list membership too.
+(defmfun $mymember (x e) (consp
+     (member x (cdr e) :test #'(lambda (x q) (eq t (meqp x q))))))
