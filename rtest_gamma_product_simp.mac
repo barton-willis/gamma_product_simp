@@ -171,20 +171,15 @@ k^2$
 gamma_product_simp(e^2/gamma(k + 1));
 k/gamma(k)$
 
-/* not sure
-    a = R(1, 2) + R(1, 3)
-    b = a + R(1, 3)
-    assert gamma_product_simp(gamma(2*k)/gamma(k)*gamma(k + a)*gamma(k + b)
-        ) == 3*2**(2*k + 1)*3**(-3*k - 2)*sqrt(%pi)*gamma(3*k + R(3, 2))/2
-*/
+gamma_product_simp(gamma(2*k)/gamma(k)*gamma(k + 1/2+1/3)*gamma(k + 1/2+2/3));
+3*2^(2*k + 1)*3^(-3*k - 2)*sqrt(%pi)*gamma(3*k + 3/2)/2$
+
 gamma_product_simp((x + 1)*factorial(x)/gamma(y));
 gamma(x + 2)/gamma(y)$
 
-/* I guess that rf is the pochhammer symbol. 
-gamma_product_simp(rf(x + n, k)*binomial(n, k)).simplify() == Piecewise(
-        (gamma(n + 1)*gamma(k + n + x)/(gamma(k + 1)*gamma(n + x)*gamma(-k + n + 1)), n > -x),
-        ((-1)**k*gamma(n + 1)*gamma(-n - x + 1)/(gamma(k + 1)*gamma(-k + n + 1)*gamma(-k - n - x + 1)), True))
-*/
+/* SymPy apparently gives a split rule splitting on the sign of n+x. */
+gamma_product_simp(pochhammer(x + n, k)*binomial(n, k));
+gamma(n + 1)*gamma(k + n + x)/(gamma(k + 1)*gamma(n + x)*gamma(-k + n + 1))$
 
 /* I'm lost here:
     A, B = symbols('A B', commutative=False)
@@ -241,16 +236,3 @@ gamma(m + 1)/(gamma(i + 1)*gamma(-i + m + 1))$
 
 gamma_product_simp(gamma(-p + 4));
 gamma(-p + 4)$
-
-/* not sure
-
-def test_issue_22606():
-    fx = Function('f')(x)
-    eq = x + gamma(y)
-    # seems like ans should be `eq`, not `(x*y + gamma(y + 1))/y`
-    ans = gamma_product_simp(eq)
-    assert gamma_product_simp(eq.subs(x, fx)).subs(fx, x) == ans
-    assert gamma_product_simp(eq.subs(x, cos(x))).subs(cos(x), x) == ans
-    assert 1/gamma_product_simp(1/eq) == ans
-    assert gamma_product_simp(fx.subs(x, eq)).args[0] == ans
-*/
