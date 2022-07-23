@@ -14,6 +14,7 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
  /* Return a lambda form that generates the Gauss gamma function 
  product identity; see http://dlmf.nist.gov/5.5.E6 */
 
+/* Apply ratsimp only to the arguments of gamma. */
 ratsimp_gamma_args(e) := block([inflag : true],
   if mapatom(e) then e
   elseif inpart(e,0) = 'gamma then gamma(ratsimp(first(e)))
@@ -83,7 +84,7 @@ gamma_arg_increase(e) := block([a,repeat : false,ee],
        
    I should fix that.*/
 
-  gamma_arg_decrease(e) := block([a,repeat : false,ee],
+gamma_arg_decrease(e) := block([a,repeat : false,ee],
   if mapatom(e) then e
   elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),

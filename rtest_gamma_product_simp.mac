@@ -236,3 +236,35 @@ gamma(m + 1)/(gamma(i + 1)*gamma(-i + m + 1))$
 
 gamma_product_simp(gamma(-p + 4));
 gamma(-p + 4)$
+
+/* End of tests from SymPy*/
+
+gamma_product_simp(2/3);
+2/3$
+
+gamma_product_simp(-2/3);
+-2/3$
+
+gamma_product_simp(1.3);
+1.3$
+
+gamma_product_simp(1.3b9);
+1.3b9$
+
+gamma_product_simp([%pi,%e,%phi,minf,-inf,inf]);
+[%pi,%e,%phi,minf,-inf,inf]$
+
+gamma_product_simp(x+1/2);
+x+1/2$
+
+gamma_product_simp(sin(a+y)-z);
+sin(a+y)-z$
+
+(X : gamma_product_simp(x*gamma(x)) - x*gamma(x),0);
+0$
+
+makelist(subst(x=k/5,X),k,1,16);
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]$
+
+
+
