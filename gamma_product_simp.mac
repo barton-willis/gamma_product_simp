@@ -8,6 +8,10 @@ modify it under the terms of the GNU General Public License GPLv3; see
 https://www.gnu.org/licenses/quick-guide-gplv3.html .
 */
  
+ /* Suggestion from the CL translator */
+ eval_when(translate,declare_translated(gamma_arg_increase,gamma_arg_decrease,
+         gamma_product_simp))$
+
  load("opsubst");
  load("op_predicates");
 
