@@ -1,5 +1,0 @@
-(defun $mtimesp (e) (mtimesp e))
-
-(defun $mplusp (e) (mplusp e))
-
-(defum $mexptp (e) (mexptp (e))
