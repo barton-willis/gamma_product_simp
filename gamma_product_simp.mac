@@ -14,12 +14,17 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
  /* Return a lambda form that generates the Gauss gamma function 
  product identity; see http://dlmf.nist.gov/5.5.E6 */
 
+ratsimp_gamma_args(e) := block([inflag : true],
+  if mapatom(e) then e
+  elseif inpart(e,0) = 'gamma then gamma(ratsimp(first(e)))
+  else map('ratsimp_gamma_args, e));
+
  make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
     lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
 
  gamma_product_simp(e) := block([a,N,id,repeat : false,ee,dn,fn,keepfloat : true],
-    e : makegamma(e), /* not sure I like this */
-    e : ratsimp(gamma_arg_increase(gamma_arg_decrease(e))),
+    e : ratsimp_gamma_args(makegamma(e)), /* not sure I like this */
+    e : gamma_arg_increase(gamma_arg_decrease(e)),
     a : map('first, gatherargs(e,'gamma)),
     N : length(a),
 
@@ -34,7 +39,7 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
             if is(e # ee) then repeat : true,
             e : ee))),
 
-    /* Do gamma(X) gamma(n-X) ==> pochhammer(1-X,n-1) %pi/sin(%pi X), when
+     /* Do gamma(X) gamma(n-X) ==> pochhammer(1-X,n-1) %pi/sin(%pi X), when
        n is explicitly a nonnegative integer. */
     for ak in a do (
         for bk in a do (
@@ -58,6 +63,7 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
 
 /* Do X*gamma(X) ==> gamma(X+1). Repeat until there are no more such terms. 
    See http://dlmf.nist.gov/5.5.E1 */
+
 gamma_arg_increase(e) := block([a,repeat : false,ee],
   if mapatom(e) then e
   elseif mtimesp(e) then (
@@ -71,11 +77,12 @@ gamma_arg_increase(e) := block([a,repeat : false,ee],
   else map('gamma_arg_increase, e)); 
 
 /* Do gamma(X+1)/X ==> gamma(X). Repeat until there are no more
-   such terms. This misses cases such as;
+   such terms. This misses cases such as:
 
        gamma_arg_decrease(gamma(x+1/2)/((2*x+1)/2))  
        
    I should fix that.*/
+
   gamma_arg_decrease(e) := block([a,repeat : false,ee],
   if mapatom(e) then e
   elseif mtimesp(e) then (
