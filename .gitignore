@@ -32,3 +32,5 @@
 *.sx32fsl
 *.wx64fsl
 (defun $mtimesp (e) (mtimesp e)).txt 
+*.ERR
+*.UNLISP
