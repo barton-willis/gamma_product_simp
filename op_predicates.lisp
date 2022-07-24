@@ -16,6 +16,7 @@
 
 ;; Experimental function--Maxima's member tests equality with alike. This
 ;; member function uses meqp to test for equality and it is specialized 
-;; membership to Maxima list member.
+;; membership to Maxima list member. It doesn't check that the second
+;; argument is a Maxima list--that's a bit of a problem.
 (defmfun $mymember (x e) (consp
      (member x (cdr e) :test #'(lambda (x q) (eq t (meqp x q))))))

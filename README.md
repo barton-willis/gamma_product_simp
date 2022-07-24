@@ -21,4 +21,3 @@ Here are some examples:
 (%i6)	gamma_product_simp(x*gamma(x)+gamma(x+3)/(x+2));
 (%o6)	(x^2+2*x)*gamma(x)
 ~~~
-The last example (%o6) is a simplification of a sum, not a product of gamma functions. Accordingly, maybe I will rename `gamma_product_simp` to `gamma_simp.`

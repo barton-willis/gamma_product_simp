@@ -71,211 +71,233 @@ DAMAGE.
 	m1pbranch : false,0);
 0$
 
-gamma_product_simp(gamma(x));
+gamma_simp(gamma(x));
 gamma(x)$
 
-gamma_product_simp(gamma(x + 1)/x);
+gamma_simp(gamma(x + 1)/x);
 gamma(x)$
 
-gamma_product_simp(gamma(x)/(x - 1));
+gamma_simp(gamma(x)/(x - 1));
 gamma(x - 1)$
 
-gamma_product_simp(x*gamma(x));
+gamma_simp(x*gamma(x));
 gamma(x + 1)$
 
-gamma_product_simp((x + 1)*gamma(x + 1));
+gamma_simp((x + 1)*gamma(x + 1));
 gamma(x + 2)$
 
-gamma_product_simp(gamma(x + y)*(x + y));
+gamma_simp(gamma(x + y)*(x + y));
 gamma(x + y + 1)$
 
-gamma_product_simp(x/gamma(x + 1));
+gamma_simp(x/gamma(x + 1));
 1/gamma(x)$
 
-gamma_product_simp((x + 1)^2/gamma(x + 2));
+gamma_simp((x + 1)^2/gamma(x + 2));
 (x + 1)/gamma(x + 1)$
 
-gamma_product_simp(x*gamma(x) + gamma(x + 3)/(x + 2));
-(x + 2)*gamma(x + 1)$
+gamma_simp(x*gamma(x) + gamma(x + 3)/(x + 2));
+x*gamma(x+1)+2*gamma(x+1)$
 
-gamma_product_simp(gamma(2*x)*x);
+gamma_simp(gamma(2*x)*x);
 gamma(2*x + 1)/2$
 
-gamma_product_simp(gamma(2*x)/(x - 1/2));
+gamma_simp(gamma(2*x)/(x - 1/2));
 2*gamma(2*x - 1)$
 
-gamma_product_simp(gamma(x)*gamma(1 - x));
+gamma_simp(gamma(x)*gamma(1 - x));
 %pi/sin(%pi*x)$
 
-gamma_product_simp(gamma(x)*gamma(-x));
+gamma_simp(gamma(x)*gamma(-x));
 -(%pi/(x*sin(%pi*x)))$
 
-gamma_product_simp(1/gamma(x + 3)/gamma(1 - x));
-sin(%pi*x)/(%pi*x*(x + 1)*(x + 2))$
+gamma_simp(1/gamma(x + 3)/gamma(1 - x));
+sin(%pi*x)/(%pi*x^3+3*%pi*x^2+2*%pi*x)$
 
-gamma_product_simp((n + 2)!);
+gamma_simp((n + 2)!);
 gamma(n + 3)$
 
-gamma_product_simp(binomial(n, k));
+gamma_simp(binomial(n, k));
 gamma(n + 1)/(gamma(k + 1)*gamma(-k + n + 1))$
 
-gamma_product_simp(gamma(x)*gamma(x + 1/2)*gamma(y)/gamma(x + y));
+gamma_simp(gamma(x)*gamma(x + 1/2)*gamma(y)/gamma(x + y));
 2^(-2*x + 1)*sqrt(%pi)*gamma(2*x)*gamma(y)/gamma(x + y)$
 
-gamma_product_simp(1/gamma(x)/gamma(x - 1/3)/gamma(x + 1/3)); 
+gamma_simp(1/gamma(x)/gamma(x - 1/3)/gamma(x + 1/3)); 
 3^(3*x - 3/2)/(2*%pi*gamma(3*x - 1))$
 
-gamma_product_simp(gamma(1/2 + x/2)*gamma(1 + x/2)/gamma(1 + x)/sqrt(%pi)*2**x);
+gamma_simp(gamma(1/2 + x/2)*gamma(1 + x/2)/gamma(1 + x)/sqrt(%pi)*2**x);
 1$
 
-gamma_product_simp(gamma(-1/4)*gamma(-3/4));
+gamma_simp(gamma(-1/4)*gamma(-3/4));
 16*sqrt(2)*%pi/3$
 
-gamma_product_simp(gamma(2*x)/gamma(x));
+gamma_simp(gamma(2*x)/gamma(x));
 2^(2*x - 1)*gamma(x + 1/2)/sqrt(%pi)$
 
 (e : (-gamma(k)*gamma(k + 2) + gamma(k + 1)^2)/gamma(k)^2,0);
 0$
 
-gamma_product_simp(e);
+gamma_simp(e);
 -k$
 
-gamma_product_simp(1/e);
+gamma_simp(1/e);
 -1/k$
 
 (e : (gamma(x) + gamma(x + 1))/gamma(x),0);
 0$
 
-gamma_product_simp(e);
+gamma_simp(e);
 x + 1$
 
-gamma_product_simp(1/e);
+gamma_simp(1/e);
 1/(x + 1)$
 
 (e : (gamma(x) + gamma(x + 2))*(gamma(x - 1) + gamma(x))/gamma(x),0);
 0$
 
 /*Apparently, SymPy simplifies this to (x^2 + x + 1)*gamma(x + 1)/(x - 1).
-But Maxima gives gamma(x-1)*x^3+gamma(x-1)*x^2+gamma(x-1)*x. Maxima's result
-factors as gamma(x-1)*x*(x^2+x+1). I think Maxima's answer is better. 
+But Maxima gives gamma(x-1)*x*(x^2+x+1). I think Maxima's answer is better. 
 Guess: the difference is due to a fluke in the order of the matching.*/
-gamma_product_simp(e);
-gamma(x-1)*x^3+gamma(x-1)*x^2+gamma(x-1)*x$
+gamma_simp(e);
+gamma(x-1)*x*(x^2+x+1)$
 
 (e : (-gamma(k)*gamma(k + 2) + gamma(k + 1)^2)/gamma(k)^2,0);
 0$
 
-gamma_product_simp(e^2);
+gamma_simp(e^2);
 k^2$
 
-gamma_product_simp(e^2/gamma(k + 1));
+gamma_simp(e^2/gamma(k + 1));
 k/gamma(k)$
 
-gamma_product_simp(gamma(2*k)/gamma(k)*gamma(k + 1/2+1/3)*gamma(k + 1/2+2/3));
+gamma_simp(gamma(2*k)/gamma(k)*gamma(k + 1/2+1/3)*gamma(k + 1/2+2/3));
 3*2^(2*k + 1)*3^(-3*k - 2)*sqrt(%pi)*gamma(3*k + 3/2)/2$
 
-gamma_product_simp((x + 1)*factorial(x)/gamma(y));
+gamma_simp((x + 1)*factorial(x)/gamma(y));
 gamma(x + 2)/gamma(y)$
 
 /* SymPy apparently gives a split rule splitting on the sign of n+x. */
-gamma_product_simp(pochhammer(x + n, k)*binomial(n, k));
+gamma_simp(pochhammer(x + n, k)*binomial(n, k));
 gamma(n + 1)*gamma(k + n + x)/(gamma(k + 1)*gamma(n + x)*gamma(-k + n + 1))$
 
 /* I'm lost here:
     A, B = symbols('A B', commutative=False)
-    assert gamma_product_simp(e*B*A) == gamma_product_simp(e)*B*A
+    assert gamma_simp(e*B*A) == gamma_simp(e)*B*A
 */
 
-gamma_product_simp(gamma(2*k)/gamma(k)*gamma(-k - 1/2));
+gamma_simp(gamma(2*k)/gamma(k)*gamma(-k - 1/2));
  (-2**(2*k + 1)*sqrt(%pi)/(2*((2*k + 1)*cos(%pi*k))))$
 
-gamma_product_simp(gamma(k)*gamma(k + 1/3)*gamma(k + 2/3))/gamma(k*3/2);
+gamma_simp(gamma(k)*gamma(k + 1/3)*gamma(k + 2/3))/gamma(k*3/2);
 (3*2**(3*k + 1)*3**(-3*k - 1/2)*sqrt(%pi)*gamma(k*3/2 + 1/2)/2)$
 
-gamma_product_simp(gamma(1/4)/gamma(5/4));
+gamma_simp(gamma(1/4)/gamma(5/4));
 4$
 
-gamma_product_simp(binomial(n + 2, k + 1/2));
+gamma_simp(binomial(n + 2, k + 1/2));
 gamma(n + 3)/ (gamma(k + 3/2)*gamma(-k + n + 5/2))$
 
-gamma_product_simp(binomial(n + 2, k + 2.0));
+gamma_simp(binomial(n + 2, k + 2.0));
 gamma(n + 3)/(gamma(k + 3.0)*gamma(-k + n + 1))$
 
-gamma_product_simp(binomial(0, x));
+gamma_simp(binomial(0, x));
 sin(%pi*x)/(%pi*x)$
 
 (e : gamma(n + 1/3)*gamma(n + 2/3),0);
 0$
 
-gamma_product_simp(e);
+gamma_simp(e);
 gamma(n + 1/3)*gamma(n + 2/3)$
 
-gamma_product_simp(gamma(4*n + 1/2)/gamma(2*n - 3/4));
+gamma_simp(gamma(4*n + 1/2)/gamma(2*n - 3/4));
 2**(4*n - 5/2)*(8*n - 3)*gamma(2*n + 3/4)/sqrt(%pi)$
 
 (e : gamma(exp(i)),0);
 0$
 
-gamma_product_simp(e);
+gamma_simp(e);
 gamma(exp(i))$
 
 (e : gamma(m + 3),0);
 0$
 
-gamma_product_simp(e);
+gamma_simp(e);
  gamma(m + 3)$
 
 (e : gamma(m + 1)/(gamma(i + 1)*gamma(-i + m + 1)),0);
 0$
 
-gamma_product_simp(e);
+gamma_simp(e);
 gamma(m + 1)/(gamma(i + 1)*gamma(-i + m + 1))$
 
 (declare(p,integer), assume(p>0),0);
 0$
 
-gamma_product_simp(gamma(-p + 4));
+gamma_simp(gamma(-p + 4));
 gamma(-p + 4)$
 
 /* End of tests from SymPy*/
 
-gamma_product_simp(2/3);
+gamma_simp(2/3);
 2/3$
 
-gamma_product_simp(-2/3);
+gamma_simp(-2/3);
 -2/3$
 
-gamma_product_simp(1.3);
+gamma_simp(1.3);
 1.3$
 
-gamma_product_simp(1.3b9);
+gamma_simp(1.3b9);
 1.3b9$
 
-gamma_product_simp([%pi,%e,%phi,minf,-inf,inf]);
+gamma_simp([%pi,%e,%phi,minf,-inf,inf]);
 [%pi,%e,%phi,minf,-inf,inf]$
 
-gamma_product_simp(x+1/2);
+gamma_simp(x+1/2);
 x+1/2$
 
-gamma_product_simp(sin(a+y)-z);
+gamma_simp(sin(a+y)-z);
 sin(a+y)-z$
 
-(X : gamma_product_simp(x*gamma(x)) - x*gamma(x),0);
+(X : gamma_simp(x*gamma(x)) - x*gamma(x),0);
 0$
 
 makelist(subst(x=k/5,X),k,1,16);
 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]$
 
+gamma_simp(%pi*x*gamma(x));
+%pi*gamma(x+1)$
+
+gamma_simp((a+1/2)*gamma(a+1/2));
+gamma(a+3/2)$
+
+gamma_simp((2*a+1)*gamma(a+1/2))/2;
+gamma(a+3/2)$
+
+gamma_simp(7*x*gamma(x));
+7*gamma(x+1)$
+
+gamma_simp(32*x^2*gamma(x));
+32*x*gamma(x+1)$
+
+gamma_simp(32*x^2*gamma(x) - 32*x*gamma(x+1));
+0$
+
+gamma_simp(x^2*gamma(x)^2/8 - gamma(x+1)^2/8);
+0$
+
 /* See bug #1. */
-gamma_product_simp(x/gamma(x+1));
+gamma_simp(x/gamma(x+1));
 1/gamma(x)$
 
 /* Clean up */
 (remvalue(X,e),0);
 0$
 
+/* This test is fragile. But it does check if the gamma_simp code introduces
+any extraneous global variables */
 values;
-[]$
+[nextlayerfactor,facsum_combine]$
 
 contexts;
 [initial,global]$

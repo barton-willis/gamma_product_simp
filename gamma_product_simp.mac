@@ -8,7 +8,7 @@ modify it under the terms of the GNU General Public License GPLv3; see
 https://www.gnu.org/licenses/quick-guide-gplv3.html .
 */
  
- /* Suggestion from the CL translator */
+ /* The CL translator suggests adding the following. */
  eval_when(translate,declare_translated(gamma_arg_increase,gamma_arg_decrease,
          gamma_product_simp))$
 
@@ -17,6 +17,9 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
 
  /* Return a lambda form that generates the Gauss gamma function 
  product identity; see http://dlmf.nist.gov/5.5.E6 */
+ make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
+    lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
+
 
 /* Apply ratsimp only to the arguments of gamma. */
 ratsimp_gamma_args(e) := block([inflag : true],
@@ -24,26 +27,21 @@ ratsimp_gamma_args(e) := block([inflag : true],
   elseif inpart(e,0) = 'gamma then gamma(ratsimp(first(e)))
   else map('ratsimp_gamma_args, e));
 
- make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
-    lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
+ /* This is the user level function. Actually, it's the only function
+ in this file that is intended to be a user level function.*/
 
- gamma_product_simp(e) := block([a,N,id,repeat : false,ee,dn,fn,keepfloat : true],
-    e : ratsimp_gamma_args(makegamma(e)), /* not sure I like this */
-    ee : e,
-    e : gamma_arg_increase(gamma_arg_decrease(e)),
+gamma_simp(e) := block([opsubst : true],
+  e : ratsimp_gamma_args(makegamma(e)), /* not sure I like this */
+  e : homogenize_gamma(e),
+  e : gamma_arg_increase(gamma_arg_decrease(e)),
+  subst("*" = lambda([[q]], gamma_product_simp(xreduce("*",q))),e));
+
+ gamma_product_simp(e) := block([a,N,id,ee,dn,fn,keepfloat : true],
+    ee : e,    
     a : map('first, gatherargs(e,'gamma)),
     N : length(a),
 
-    /* When n is a positive integer and the expression e involves both
-       gamma(X+n) and gamma(X), do gamma(X+n) ==> pochhammer(X,n) gamma(X).
-       The expansion of the pochhammer term is controlled by the option variable
-       pochhammer_max_index (default 100). */
-    for ak in a do (
-     for bk in a do (
-        if featurep(ak-bk,'integer) and ak-bk > 0 then (
-            e : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e)))),
-
-     /* Do gamma(X) gamma(n-X) ==> pochhammer(1-X,n-1) %pi/sin(%pi X), when
+   /* Do gamma(X) gamma(n-X) ==> pochhammer(1-X,n-1) %pi/sin(%pi X), when
        n is explicitly a nonnegative integer. */
     for ak in a do (
         for bk in a do (
@@ -61,6 +59,25 @@ ratsimp_gamma_args(e) := block([inflag : true],
           e : ratsubst(rhs(id), lhs(id), e))),
     /* When the expression has changed, recurse; otherwise return e.*/       
     if is(e # ee) then gamma_product_simp(e) else e)$
+
+/* When n is a positive integer and the expression e involves both
+   gamma(X+n) and gamma(X), do gamma(X+n) ==> pochhammer(X,n) gamma(X).
+   The expansion of the pochhammer term is controlled by the option variable
+   pochhammer_max_index (default 100). If the expression e changes after finishing
+   the double loop, recurse.
+
+   Each time a match to gamma(X+n) & gamma(X) is detected, dispatch facsum on the
+   result. */
+
+homogenize_gamma(e) := block([a,ee : e],
+   a : map('first, gatherargs(e,'gamma)),
+   for ak in a do (
+      for bk in a do (
+         if featurep(ak-bk,'integer) and ak-bk > 0 then (
+            e : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e),
+            e : facsum(e,gamma(bk))))),
+      if is(e # ee) then homogenize_gamma(e) else e)$ 
+
 
 
 /* Do X*gamma(X) ==> gamma(X+1). Repeat until there are no more such terms. 
