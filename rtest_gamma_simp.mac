@@ -286,6 +286,9 @@ gamma_simp(32*x^2*gamma(x) - 32*x*gamma(x+1));
 gamma_simp(x^2*gamma(x)^2/8 - gamma(x+1)^2/8);
 0$
 
+(gamma(2*x)/gamma(x))- (2^(2*x -1) * gamma(x+1/2) / sqrt(%pi));
+0$
+
 /* See bug #1. */
 gamma_simp(x/gamma(x+1));
 1/gamma(x)$
