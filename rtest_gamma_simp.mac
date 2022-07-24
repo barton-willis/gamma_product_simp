@@ -286,7 +286,13 @@ gamma_simp(32*x^2*gamma(x) - 32*x*gamma(x+1));
 gamma_simp(x^2*gamma(x)^2/8 - gamma(x+1)^2/8);
 0$
 
-(gamma(2*x)/gamma(x))- (2^(2*x -1) * gamma(x+1/2) / sqrt(%pi));
+gamma_simp(gamma(2*x)/gamma(x)- (2^(2*x -1) * gamma(x+1/2) / sqrt(%pi)));
+0$
+
+gamma_simp(sqrt(%pi)*2^(2*x+2)*gamma(x)*gamma(x+1)*gamma((2*x+3)/2)-2*%pi*gamma(x)*gamma(2*x+2));
+0$
+
+gamma_simp(sqrt(%pi)*2^(2*x)*gamma(x)*gamma(x+1)*gamma((2*x+1)/2)-2*%pi*gamma(2*x)*gamma(x+1));
 0$
 
 /* See bug #1. */
