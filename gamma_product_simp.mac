@@ -8,9 +8,9 @@ modify it under the terms of the GNU General Public License GPLv3; see
 https://www.gnu.org/licenses/quick-guide-gplv3.html .
 */
  
- /* The CL translator suggests adding the following. */
+ /* The CL translator suggests adding the following: */
  eval_when(translate,declare_translated(gamma_arg_increase,gamma_arg_decrease,
-         gamma_product_simp))$
+         gamma_product_simp,homogenize_gamma))$
 
  load("opsubst");
  load("op_predicates");
@@ -19,7 +19,6 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
  product identity; see http://dlmf.nist.gov/5.5.E6 */
  make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
     lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
-
 
 /* Apply ratsimp only to the arguments of gamma. */
 ratsimp_gamma_args(e) := block([inflag : true],
@@ -67,7 +66,8 @@ gamma_simp(e) := block([opsubst : true],
    the double loop, recurse.
 
    Each time a match to gamma(X+n) & gamma(X) is detected, dispatch facsum on the
-   result. */
+   result. Unfortunately, subsequent processing sometimes expands the factorization
+   done by facsum.*/
 
 homogenize_gamma(e) := block([a,ee : e],
    a : map('first, gatherargs(e,'gamma)),
@@ -77,8 +77,6 @@ homogenize_gamma(e) := block([a,ee : e],
             e : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e),
             e : facsum(e,gamma(bk))))),
       if is(e # ee) then homogenize_gamma(e) else e)$ 
-
-
 
 /* Do X*gamma(X) ==> gamma(X+1). Repeat until there are no more such terms. 
    See http://dlmf.nist.gov/5.5.E1 */
