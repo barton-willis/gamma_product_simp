@@ -67,7 +67,7 @@ DAMAGE.
 
 */
 
-(load("gamma_product_simp"),radsubstflag : true, ratfac : true, domain : real,
+(load("gamma_simp"),radsubstflag : true, ratfac : true, domain : real,
 	m1pbranch : false,0);
 0$
 
