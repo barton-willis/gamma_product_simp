@@ -1,8 +1,6 @@
 # gamma_product_simp
 
-Maxima code for simplifying expressions that gamma functions.
-
-Here are some examples:
+Maxima code for simplifying expressions that involve gamma functions. Here are some examples:
 ~~~
 (%i1)	load(gamma_simp)$
 
