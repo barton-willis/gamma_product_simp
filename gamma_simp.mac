@@ -13,14 +13,19 @@ https://www.gnu.org/licenses/quick-guide-gplv3.html .
          gamma_product_simp,homogenize_gamma))$
 
  load("opsubst");
- load("op_predicates");
 
- /* Return a lambda form that generates the Gauss gamma function 
+mtimesp(e) := not mapatom(e) and inpart(e,0) = "*";
+mplusp(e) := not mapatom(e) and inpart(e,0) = "+";
+mexptp(e) := not mapatom(e) and inpart(e,0) = "^";
+
+  /* Return a lambda form that generates the Gauss gamma function 
  product identity; see http://dlmf.nist.gov/5.5.E6 */
  make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
     lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
 
-/* Apply ratsimp only to the arguments of gamma. */
+/* Apply ratsimp only to the arguments of gamma. Doing this is an effort to allow
+   ratsubst to make more matches to gamma expressions without dispatching 
+   ratsimp on the entire expression.*/
 ratsimp_gamma_args(e) := block([inflag : true],
   if mapatom(e) then e
   elseif inpart(e,0) = 'gamma then gamma(ratsimp(first(e)))
@@ -78,35 +83,61 @@ homogenize_gamma(e) := block([a,ee : e],
             e : facsum(e,gamma(bk))))),
       if is(e # ee) then homogenize_gamma(e) else e)$ 
 
-/* Do X*gamma(X) ==> gamma(X+1). Repeat until there are no more such terms. 
-   See http://dlmf.nist.gov/5.5.E1 */
+linearp(e,x) :=  
+  polynomialp(e,[x], lambda([q],freeof(x,q)), lambda([q], is(q<=1))) and 
+  lopow(e,x)=1;
 
-gamma_arg_increase(e) := block([a,ee : e],
+/* Do X*gamma(X) ==> gamma(X+1). Repeat until there are no more such terms. 
+   See http://dlmf.nist.gov/5.5.E1 
+   
+   We match to X*gamma(X) using ratsubst(g, ak*gamma(ak),e), where g is a
+   gensym. When the result of this substitution is purely linear (not affine)
+   in g, we accept the substitution. The linearity check is suppose to prevent
+   substitutions such as (x+5)*gamma(x) ==> gamma(x+1)+5*gamma(x). This result
+   isn't wrong, but it's not what we want, I think. */
+
+gamma_arg_increase(e) := block([a,ee : e, es, g : gensym()],
   if mapatom(e) then e
   elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),
      for ak in a do (
-        if member(ak,e) then (
-            e : ratsubst(gamma(ak+1), ak*gamma(ak),e))),            
+        es : ratsubst(g, ak*gamma(ak),e),   
+        if linearp(es,g) then (
+         e : ratsubst(gamma(ratsimp(ak+1)),g,es), 
+         e : factor(e))),    
       if is(e # ee) then gamma_arg_increase(e) else e)
   else map('gamma_arg_increase, e)); 
 
-/* Do gamma(X+1)/X ==> gamma(X). Repeat until there are no more
+/* Do gamma(X)/(X-1) ==> gamma(X-1). Repeat until there are no more
    such terms. This misses cases such as:
 
        gamma_arg_decrease(gamma(x+1/2)/((2*x+1)/2))  
        
    I should fix that.*/
 
-gamma_arg_decrease(e) := block([a, ee : e],
+gamma_arg_decrease(e) := block([a, ee : e,es,g : gensym()],
   if mapatom(e) then e
   elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),
      for ak in a do (
+        print(['e = e, 'ak = ak, member(1/(ak-1),e) ]),
         if member(1/(ak-1),e) then (
             e : ratsubst(gamma(ak-1), gamma(ak)/(ak-1),e))), 
       if is(e # ee) then gamma_arg_decrease(e) else e)
   else map('gamma_arg_decrease, e));   
 
+my_complexity(e) := block([inflag : true],
+ if mapatom(e) then 1 else xreduce("+", map('my_complexity, args(e))));
 
+gamma_arg_decrease(e) := block([a, ee : e,eb,ea,g : gensym(), w : gensym()],
+  if mapatom(e) then e
+  elseif mtimesp(e) then (
+     a : map('first, gatherargs(e,'gamma)),
+     for ak in a do (
+        eb : ratsubst(g,ak,e),
+        ea : ratsubst(gamma(ak-1), gamma(g)/(g-1),eb),
+        if my_complexity(ea) < my_complexity(eb) then (
+         e : ratsubst(ak,g,ea))),       
+      if is(e # ee) then gamma_arg_decrease(e) else e)
+  else map('gamma_arg_decrease, e));  
               
