@@ -108,15 +108,11 @@ gamma_arg_increase(e) := block([a,ee : e, es, g : gensym()],
       if is(e # ee) then gamma_arg_increase(e) else e)
   else map('gamma_arg_increase, e)); 
 
-/* Do gamma(X)/(X-1) ==> gamma(X-1). Repeat until there are no more
-   such terms. This misses cases such as:
-
-       gamma_arg_decrease(gamma(x+1/2)/((2*x+1)/2))  
-       
-   I should fix that.*/
-
 my_complexity(e) := block([inflag : true],
  if mapatom(e) then 1 else xreduce("+", map('my_complexity, args(e))));
+
+/* Do gamma(X)/(X-1) ==> gamma(X-1). Repeat until there are no more
+   such terms. */
 
 gamma_arg_decrease(e) := block([a, ee : e,eb,ea,g : gensym(), w : gensym()],
   if mapatom(e) then e
