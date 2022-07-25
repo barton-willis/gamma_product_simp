@@ -15,4 +15,7 @@ Maxima code for simplifying expressions that involve gamma functions. Here are s
 
 (%i5)	gamma_simp(x*gamma(x)+gamma(x+3)/(x+2));
 (%o5)	x*gamma(x+1)+2*gamma(x+1)
+
+(%i6)	gamma_simp((k - n) *binomial(n,k)  + n * binomial(n-1,k));
+(%o6)	0
 ~~~
