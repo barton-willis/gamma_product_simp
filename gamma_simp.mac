@@ -115,16 +115,6 @@ gamma_arg_increase(e) := block([a,ee : e, es, g : gensym()],
        
    I should fix that.*/
 
-gamma_arg_decrease(e) := block([a, ee : e,es,g : gensym()],
-  if mapatom(e) then e
-  elseif mtimesp(e) then (
-     a : map('first, gatherargs(e,'gamma)),
-     for ak in a do (
-        if member(1/(ak-1),e) then (
-            e : ratsubst(gamma(ak-1), gamma(ak)/(ak-1),e))), 
-      if is(e # ee) then gamma_arg_decrease(e) else e)
-  else map('gamma_arg_decrease, e));   
-
 my_complexity(e) := block([inflag : true],
  if mapatom(e) then 1 else xreduce("+", map('my_complexity, args(e))));
 
