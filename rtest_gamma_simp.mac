@@ -387,6 +387,10 @@ true$
 float_approx_equal(subst(x=1.3, gamma_simp(f(x,2,6))) , subst(x=1.3, f(x,2,6)));
 true$
 
+/* Bug #2:  misses simplification for gamma(1/2-x) * gamma(1/2+x) #2 */
+gamma_simp(gamma(1/2-x) * gamma(1/2+x));
+-(%pi/sin((2*%pi*x-%pi)/2))$
+
 /* Clean up */
 (remvalue(X,e),0);
 0$

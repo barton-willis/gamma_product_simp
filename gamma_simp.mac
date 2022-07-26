@@ -50,7 +50,7 @@ gamma_simp(e) := block([opsubst : true],
        n is explicitly a nonnegative integer. */
     for ak in a do (
         for bk in a do (
-        dn : ak+bk,
+        dn : ratsimp(ak+bk),
         if integerp(dn) and dn >= 0 and (not featurep(ak,'integer)) then (
             e : ratsubst(pochhammer(1-ak, dn-1) *%pi/sin(%pi*ak),
                 gamma(ak)*gamma(bk),e)))),
