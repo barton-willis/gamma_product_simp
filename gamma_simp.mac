@@ -38,6 +38,7 @@ gamma_simp(e) := block([opsubst : true],
   e : ratsimp_gamma_args(e),
   e : homogenize_gamma(e),
   e : gamma_arg_increase(gamma_arg_decrease(e)),
+  e : subst("*" = lambda([[q]], gamma_magnitude_simp(xreduce("*",q))),e),
   subst("*" = lambda([[q]], gamma_product_simp(xreduce("*",q))),e));
 
  gamma_product_simp(e) := block([a,N,id,ee,dn,fn,keepfloat : true],
@@ -82,6 +83,21 @@ homogenize_gamma(e) := block([a,ee : e, keepfloat : true],
             e : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e),
             e : facsum(e,gamma(bk))))),
       if is(e # ee) then homogenize_gamma(e) else e)$ 
+
+/* See http://dlmf.nist.gov/5.4.E3 and http://dlmf.nist.gov/5.4.E4: 
+    gamma(1/2 + %i*y)*gamma(1/2-%i*y) = %pi/cosh(%pi*y) 
+    gamma(%iy)*gamma(-%i*y) = %pi/(y * sinh(%pi * y)) */
+    
+gamma_magnitude_simp(e) :=  block([a, ee : e, keepfloat : true],
+   a : map('first, gatherargs(e,'gamma)),
+   for ak in a do (
+      for bk in a do (
+         if equal(ak+bk,1) and equal(realpart(ak),1/2) then (
+            e : ratsubst(%pi/cosh(%pi*imagpart(ak)), gamma(ak)*gamma(bk),e)),
+         
+         if equal(realpart(ak),0) and equal(realpart(ak),0) then (
+            e : ratsubst(%pi/(y * sinh(%pi * y)), gamma(ak)*gamma(bk),e)))),        
+      if is(e # ee) then homogenize_gamma(e) else e)$
 
 linearp(e,x) :=  
   polynomialp(e,[x], lambda([q],freeof(x,q)), lambda([q], is(q<=1))) and 
@@ -132,3 +148,4 @@ factorial_simp(e) := block([g : gensym(),opsubst : true, keepfloat : true],
   e : gamma_simp(e),
   e : makefact(e),
   subst(g = 'gamma,e));
+

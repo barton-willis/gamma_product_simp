@@ -357,6 +357,15 @@ gamma(2*x-1)$
 gamma_simp(gamma(2*x)/(x-1/2));
 2*gamma(2*x-1)$
 
+gamma_simp(gamma(1/2 + %i)*gamma(1/2 - %i));
+%pi/cosh(%pi)$
+
+gamma_simp(gamma(1/2 + %i*y)*gamma(1/2 - %i*y));
+%pi/cosh(%pi*y)$
+
+gamma_simp(gamma(%i*y)*gamma(- %i*y));
+%pi/(y*sinh(%pi*y))$
+
 /* Clean up */
 (remvalue(X,e),0);
 0$
