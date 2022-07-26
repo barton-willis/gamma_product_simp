@@ -313,6 +313,16 @@ gamma_simp(sqrt(%pi)*2^(2*x+2)*gamma(x)*gamma(x+1)*gamma((2*x+3)/2)-2*%pi*gamma(
 gamma_simp(sqrt(%pi)*2^(2*x)*gamma(x)*gamma(x+1)*gamma((2*x+1)/2)-2*%pi*gamma(2*x)*gamma(x+1));
 0$
 
+/*See: #2118 scanmap(minfactorial,a!) infinite loop. This bug has been fixed.  */
+scanmap(factorial_simp,a!) ;
+a!$
+
+/*See: #920 minfactorial doesn't look inside "!". When factorial_expand is true,
+the factorial code simplifies the input to n!. OK, but minfactorial cannot
+do this simplify this to n! when factorial_expand is false.  */
+block([factorial_expand : false],factorial_simp((n!/(n-1)!)!));
+n!$
+
 /* See bug #1. */
 gamma_simp(x/gamma(x+1));
 1/gamma(x)$

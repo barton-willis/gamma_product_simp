@@ -26,7 +26,7 @@ mexptp(e) := not mapatom(e) and inpart(e,0) = "^";
 /* Apply ratsimp only to the arguments of gamma. Doing this is an effort to allow
    ratsubst to make more matches to gamma expressions without dispatching 
    ratsimp on the entire expression.*/
-ratsimp_gamma_args(e) := block([inflag : true],
+ratsimp_gamma_args(e) := block([inflag : true,keepfloat : true],
   if mapatom(e) then e
   elseif inpart(e,0) = 'gamma then gamma(ratsimp(first(e)))
   else map('ratsimp_gamma_args, e));
@@ -35,7 +35,7 @@ ratsimp_gamma_args(e) := block([inflag : true],
  in this file that is intended to be a user level function.*/
 
 gamma_simp(e) := block([opsubst : true],
-  e : ratsimp_gamma_args(makegamma(e)), /* not sure I like this */
+  e : ratsimp_gamma_args(e),
   e : homogenize_gamma(e),
   e : gamma_arg_increase(gamma_arg_decrease(e)),
   subst("*" = lambda([[q]], gamma_product_simp(xreduce("*",q))),e));
@@ -74,7 +74,7 @@ gamma_simp(e) := block([opsubst : true],
    result. Unfortunately, subsequent processing sometimes expands the factorization
    done by facsum.*/
 
-homogenize_gamma(e) := block([a,ee : e],
+homogenize_gamma(e) := block([a,ee : e, keepfloat : true],
    a : map('first, gatherargs(e,'gamma)),
    for ak in a do (
       for bk in a do (
@@ -96,7 +96,7 @@ linearp(e,x) :=
    substitutions such as (x+5)*gamma(x) ==> gamma(x+1)+5*gamma(x). This result
    isn't wrong, but it's not what we want, I think. */
 
-gamma_arg_increase(e) := block([a,ee : e, es, g : gensym()],
+gamma_arg_increase(e) := block([a,ee : e, es, g : gensym(),keepfloat : true],
   if mapatom(e) then e
   elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),
@@ -114,7 +114,7 @@ my_complexity(e) := block([inflag : true],
 /* Do gamma(X)/(X-1) ==> gamma(X-1). Repeat until there are no more
    such terms. */
 
-gamma_arg_decrease(e) := block([a, ee : e,eb,ea,g : gensym(), w : gensym()],
+gamma_arg_decrease(e) := block([a, ee : e,eb,ea,g : gensym(),keepfloat : true],
   if mapatom(e) then e
   elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),
@@ -126,3 +126,9 @@ gamma_arg_decrease(e) := block([a, ee : e,eb,ea,g : gensym(), w : gensym()],
       if is(e # ee) then gamma_arg_decrease(e) else e)
   else map('gamma_arg_decrease, e));  
               
+factorial_simp(e) := block([g : gensym(),opsubst : true, keepfloat : true],
+  e : subst('gamma=g,e),
+  e : subst("!" = lambda([q], gamma(q+1)),e),
+  e : gamma_simp(e),
+  e : makefact(e),
+  subst(g = 'gamma,e));
