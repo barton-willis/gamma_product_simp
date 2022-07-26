@@ -67,8 +67,8 @@ DAMAGE.
 
 */
 
-(load("gamma_simp"),radsubstflag : true, ratfac : true, domain : real,
-	m1pbranch : false,0);
+(load("gamma_simp"),radsubstflag : false, ratfac : false, domain : real,
+	m1pbranch : false, reset(float_approx_equal_tolerance), 0);
 0$
 
 gamma_simp(gamma(x));
@@ -365,6 +365,27 @@ gamma_simp(gamma(1/2 + %i*y)*gamma(1/2 - %i*y));
 
 gamma_simp(gamma(%i*y)*gamma(- %i*y));
 %pi/(y*sinh(%pi*y))$
+
+(f(z,b,n) := product(gamma(z + (b+k)/n),k,0,n-1),0);
+0$
+
+gamma_simp(f(x,-1,2));
+sqrt(%pi)*2^(2-2*x)*gamma(2*x-1)$
+
+gamma_simp(f(x,1/8,2));
+sqrt(%pi)*2^(7/8-2*x)*gamma((16*x+1)/8)$
+
+gamma_simp(f(x,1/8,12));
+%pi^(11/2)*2^(25/4-24*x)*3^(3/8-12*x)*gamma((96*x+1)/8)$
+
+float_approx_equal(subst(x=2.3, gamma_simp(f(x,1/8,2))) , subst(x=2.3, f(x,1/8,2)));
+true$
+
+float_approx_equal(subst(x=2.3, gamma_simp(f(x,1/8,4))) , subst(x=2.3, f(x,1/8,4)));
+true$
+
+float_approx_equal(subst(x=1.3, gamma_simp(f(x,2,6))) , subst(x=1.3, f(x,2,6)));
+true$
 
 /* Clean up */
 (remvalue(X,e),0);

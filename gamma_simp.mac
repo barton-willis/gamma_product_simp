@@ -97,7 +97,7 @@ gamma_magnitude_simp(e) :=  block([a, ee : e, keepfloat : true],
          
          if equal(realpart(ak),0) and equal(realpart(ak),0) then (
             e : ratsubst(%pi/(y * sinh(%pi * y)), gamma(ak)*gamma(bk),e)))),        
-      if is(e # ee) then homogenize_gamma(e) else e)$
+      if is(e # ee) then gamma_magnitude_simp(e) else e)$
 
 linearp(e,x) :=  
   polynomialp(e,[x], lambda([q],freeof(x,q)), lambda([q], is(q<=1))) and 
