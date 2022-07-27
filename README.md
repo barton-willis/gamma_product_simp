@@ -47,15 +47,30 @@ The last example shows the use of `makegamma` to pre-process the input.
 
 ## Details
 
-If `gamma_simp` is unable to simplify an expression to 0, it does not mean that the expression is nonvanishing. Example:
+The functions `gamma_simp` and `factorial_simp` make a good effort to simplify every vanishing expression to zero. But if an expression doesn't simplify to zero, it does _not_ mean that the expression is non vanishing.
+
+Additionally, `gamma_simp` does not simplify semantically identical expressions to syntactically identical expressions. That is, `gamma_simp` does not produce a canonical form. An example:
 
 ~~~
-(%i7) gamma_simp(gamma(2*x)/gamma(x)-(2^(2*x-1)*gamma(x+1/2))/sqrt(%pi));
+(%i1) load(gamma_simp)$
 
-(%o7) gamma(2*x)/gamma(x)-(2^(2*x-1)*gamma((2*x+1)/2))/sqrt(%pi)
+(%i2) xx : gamma(2*x)/gamma(x)$
+
+(%i3) yy : (2^(2*x-1)*gamma(x+1/2))/sqrt(%pi)$
+
+(%i4) gamma_simp(xx);
+
+(%o4) gamma(2*x)/gamma(x)
+(%i5) gamma_simp(yy);
+
+(%o5) (2^(2*x-1)*gamma((2*x+1)/2))/sqrt(%pi)
+(%i6) gamma_simp(xx-yy);
+
+(%o6) 0
+
 ~~~
+Although the expressions xx and yy are semantically the same (see %o6), `gamma_simp` does not simplify them to identical expressions.
 
-This expression vanishes, but `gamma_simp` is unable to simplify it to zero.
 
 ## Identities
 
@@ -94,7 +109,7 @@ The function `gamma_simp` matches subexpressions of the input to various gamma f
 The function `factorial_simp` converts all factorials to gamma form. It then dispatches `gamma_simp` and converts back to factorial form. Any gamma functions in
 the input are protected from participating in the gamma function simplification process.
 
-The only user level functions in the pacakge are `gamma_simp` and `factorial_simp.`
+The only user level functions in the package are `gamma_simp` and `factorial_simp.`
 The remaining functions in the package are _not_ intended to be user level functions. 
 
 
@@ -109,4 +124,4 @@ Part of the test file (`rtest_gamma_simp`) is adapted from the SymPy package for
 
 Additionally, I thank readers of the Maxima list including Oscar Benjamin, Stavros Macrakis, and Raymond Toy for suggestions and encouragement. Of course, all bugs are mine.
 
-_Reference:_ https://github.com/sympy/sympy/blob/master/sympy/simplify/tests/test_gammasimp.py 
+_Reference:_ https://github.com/sympy/sympy/blob/master/sympy/simplify/tests/test_gammasimp.py
