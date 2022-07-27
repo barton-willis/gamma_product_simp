@@ -44,7 +44,32 @@ The function `gamma_simp` matches subexpressions of the input to various gamma f
 
 ## Identities
 
-$$ \dfrac{\Gamma\left(z+1\right)}{z} = \Gamma\left(z\right), \quad z \in \mathbf{C} $$ 
+$$ 
+\dfrac{\Gamma\left(z+1\right)}{z} = \Gamma\left(z\right), \quad z \in \mathbf{C_\neq 0} 
+$$ 
+
+$$ 
+\Gamma\left(z\right)\Gamma\left(1-z\right)= \dfrac{\uppi}{\sin\left(\uppi z\right)},  \quad z \in \mathbf{C} \setminus \mathbf{Z}, 
+$$
+
+$$
+\prod_{k=0}^{n-1}\Gamma\left (z+\frac{k}{n}\right) = (2\uppi)^{(n-1)/2}n^{1/2-nz}  \Gamma \left(n z \right)
+$$
+
+$$
+\Gamma\left(\dfrac{1}{2}+\mathrm{i}y\right)\Gamma\left(\dfrac{1}{2}-\mathrm{i}%
+y\right)=\dfrac{\uppi}{\cosh\left(\uppi y\right)},
+$$
+
+$$
+\Gamma\left(\mathrm{i} y\right) \Gamma\left(-\mathrm{i} y\right)  = 
+\frac{\uppi}{y\sinh\left(\uppi y\right)}, \quad \y \in \mathbf{R}_{\neq 0}
+$$
+
+
+
+
+See: http://dlmf.nist.gov/5.5.E1, 
 
 
 ## Thanks
