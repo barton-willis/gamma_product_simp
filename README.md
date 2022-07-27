@@ -88,7 +88,7 @@ The remaining functions in the package are _not_ intended to be user level funct
 
 ## Testing
 
-To run the test suite for the package `gamma_simp,` enter `batch(rtest_gamma_simp, 'test) at the Maxima prompt. To do the, you will need to copy the file `rtest_gamma_simp` to a folder that Maxima can find. 
+To run the test suite for the package `gamma_simp,` enter `batch(rtest_gamma_simp, 'test)` at the Maxima prompt. To do the, you will need to copy the file `rtest_gamma_simp` to a folder that Maxima can find. 
 
 
 ## Thanks
