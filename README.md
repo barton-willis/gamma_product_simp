@@ -45,13 +45,6 @@ The last example shows the use of `makegamma` to pre-process the input.
 (%o6)	0
 ~~~
 
-## Implementation
-
-The function `gamma_simp` matches subexpressions of the input to various gamma function identities. The function `gamma_simp` uses `radsubst` to match the subexpressions, it does _not_ explicitly use Maxima's pattern matcher.
-
-The function `factorial_simp` converts all factorials to gamma form. It then dispatches `gamma_simp` and converts back to factorial form. Any gamma functions in
-the input are protected from participating in the gamma function simplification process.
-
 ## Identities
 
 The function `gamma_simp` matches subexpressions of the input to the left hand side of each of the following identities and replaces them by the right side:
@@ -80,6 +73,14 @@ $$
 
 See: http://dlmf.nist.gov/5.5.E1, http://dlmf.nist.gov/5.5.E3, http://dlmf.nist.gov/5.4.E4, and http://dlmf.nist.gov/5.4.E3 
 
+## Implementation
+
+The package is written in the Maxima language.
+
+The function `gamma_simp` matches subexpressions of the input to various gamma function identities. The function `gamma_simp` uses `radsubst` to match the subexpressions, it does _not_ explicitly use Maxima's pattern matcher.
+
+The function `factorial_simp` converts all factorials to gamma form. It then dispatches `gamma_simp` and converts back to factorial form. Any gamma functions in
+the input are protected from participating in the gamma function simplification process.
 
 ## Thanks
 
