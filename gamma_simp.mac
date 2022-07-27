@@ -122,6 +122,7 @@ gamma_arg_increase(e) := block([a,ee : e, es, g : gensym(),keepfloat : true],
       if is(e # ee) then gamma_arg_increase(e) else e)
   else map('gamma_arg_increase, e)); 
 
+/* A measure of the my_complexity of an expression.This simply counts leafs.*/
 my_complexity(e) := block([inflag : true],
  if mapatom(e) then 1 else xreduce("+", map('my_complexity, args(e))));
 
@@ -139,7 +140,12 @@ gamma_arg_decrease(e) := block([a, ee : e,eb,ea,g : gensym(),keepfloat : true],
          e : ratsubst(ak,g,ea))),       
       if is(e # ee) then gamma_arg_decrease(e) else e)
   else map('gamma_arg_decrease, e));  
-              
+
+/* Convert factorials to gamma functions, dispatch gamma_simp, and finally
+   convert gamma functions back to factorial form. The gamma functions that
+   are in the input are protected from participating the the simplification process.
+   We do this by substituting a gensym for gamma. After converting back to factorials, 
+   this substitution is reverted.*/         
 factorial_simp(e) := block([g : gensym(),opsubst : true, keepfloat : true],
   e : subst('gamma=g,e),
   e : subst("!" = lambda([q], gamma(q+1)),e),
