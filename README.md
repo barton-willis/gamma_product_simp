@@ -4,7 +4,7 @@ Maxima code for simplifying expressions that involve gamma functions.
 
 ## Installation
 
-To use the `gamma_simp` package, copy the file `gamma_simp.mac` to a path that Maxima can find. To load the package, enter `load(gamma_simp)` at a Maxima command line.
+To use the `gamma_simp` package, copy the file `gamma_simp.mac` to a path that Maxima can find. To load the package, enter `load(gamma_simp)` at the Maxima command line.
 
 To view the path that Maxima searches to find a package, enter `file_search_maxima;` at a Maxima command line. 
 
@@ -12,12 +12,20 @@ To view the path that Maxima searches to find a package, enter `file_search_maxi
 
 There are two user level functions in the package. They are `gamma_simp` and `factorial_simp.` Both of these functions take a single Maxima expression as input and both return a simplification of the input. 
 
-_Option varibles:_ The option variables `radsubstflag` and `ratfac` sometimes alter the results of `gamma_simp` and `factorial_simp.` 
+The function `gamma_simp` matches subexpressions of the input to various gamma function identities and replaces the match with a simplification. The simplification process generally only converts gamma functions to gamma functions (not, for example
+into beta functions), but depending on the value of the option variable `pochhammer_max_index,` the output can involve a pochhammer symbol.
+
+The function  `factorial_simp` works similarly. 
+
+To simplify all gamma-like functions, including binomial coefficients, pochhammer symbols, beta functions, and factorials, apply the function `makegamma` to the input of `gamma_simp.` 
+
+_Option variables:_ The option variables `radsubstflag` `pochhammer_max_index,` and `ratfac` sometimes alter the results of `gamma_simp` and `factorial_simp.` 
 
 _Related functions:_ `factcomb,` `minfactorial,` `makegamma,` and `makefactorial.`
 
 ## Examples
 
+The last example shows the use of `makegamma.` 
 ~~~
 (%i1)	load(gamma_simp)$
 
@@ -33,7 +41,7 @@ _Related functions:_ `factcomb,` `minfactorial,` `makegamma,` and `makefactorial
 (%i5)	gamma_simp(x*gamma(x)+gamma(x+3)/(x+2));
 (%o5)	x*gamma(x+1)+2*gamma(x+1)
 
-(%i6)	gamma_simp((k - n) *binomial(n,k)  + n * binomial(n-1,k));
+(%i6)	gamma_simp(makegamma((k - n) *binomial(n,k)  + n * binomial(n-1,k)));
 (%o6)	0
 ~~~
 
