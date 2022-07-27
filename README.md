@@ -55,6 +55,7 @@ If `gamma_simp` is unable to simplify an expression to 0, it does not mean that 
 (%o7) gamma(2*x)/gamma(x)-(2^(2*x-1)*gamma((2*x+1)/2))/sqrt(%pi)
 ~~~
 
+This expression vanishes, but `gamma_simp` is unable to simplify it to zero.
 
 ## Identities
 
