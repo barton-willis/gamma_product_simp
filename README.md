@@ -1,4 +1,4 @@
-# Gamma simp
+# Gamma function simplification
 
 Maxima code for simplifying expressions that involve gamma functions. 
 
@@ -41,6 +41,10 @@ _Related functions:_ `factcomb,` `minfactorial,` `makegamma,` and `makefactorial
 ## Implementation
 
 The function `gamma_simp` matches subexpressions of the input to various gamma function identities. The function `gamma_simp` does not explicitly use Maxima's pattern matcher.
+
+## Identities
+
+\[ \Gamma\left(z+1\right)=z\Gamma\left(z\right),\]
 
 ## Thanks
 
