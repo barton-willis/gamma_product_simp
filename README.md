@@ -1,12 +1,12 @@
 # Gamma function simplification
 
-Maxima code for simplifying expressions that involve gamma functions. 
+Maxima code for simplifying expressions that involve gamma and factorial functions. 
 
 ## Installation
 
-To use the `gamma_simp` package, copy the file `gamma_simp.mac` to a path that Maxima can find. To load the package, enter `load(gamma_simp)` at the Maxima command line.
+To use the `gamma_simp` package, copy the file `gamma_simp.mac` to a folder that Maxima can find. To load the package, enter `load(gamma_simp)` at the Maxima command line.
 
-To view the path that Maxima searches to find a package, enter `file_search_maxima;` at a Maxima command line. 
+To view the paths that Maxima searches to find a package, enter `file_search_maxima;` at a Maxima command line. 
 
 ## Usage
 
@@ -15,11 +15,11 @@ There are two user level functions in the package. They are `gamma_simp` and `fa
 The function `gamma_simp` matches subexpressions of the input to various gamma function identities and replaces the match with a simplification. The simplification process generally only converts gamma functions to gamma functions (not, for example,
 into beta functions), but depending on the value of the option variable `pochhammer_max_index,` the output can involve a pochhammer symbol.
 
-The function  `factorial_simp` works similarly. 
+The function `factorial_simp` works similarly. 
 
 To simplify all gamma-like functions, including binomial coefficients, pochhammer symbols, beta functions, and factorials, apply the function `makegamma` to the input of `gamma_simp.` 
 
-_Option variables:_ The option variables `radsubstflag` `pochhammer_max_index,` and `ratfac` sometimes alter the results of `gamma_simp` and `factorial_simp.` 
+_Option variables:_ The option variables `radsubstflag,` `pochhammer_max_index,` and `ratfac` sometimes alter the results of `gamma_simp` and `factorial_simp.` 
 
 _Related functions:_ `factcomb,` `minfactorial,` `makegamma,` and `makefactorial.`
 
@@ -81,6 +81,19 @@ The function `gamma_simp` matches subexpressions of the input to various gamma f
 
 The function `factorial_simp` converts all factorials to gamma form. It then dispatches `gamma_simp` and converts back to factorial form. Any gamma functions in
 the input are protected from participating in the gamma function simplification process.
+
+The only user level functions in the pacakge are `gamma_simp` and `factorial_simp.`
+The remaining functions in the package (mtimesp, mplusp, mexptp, make_gamma_product_id,
+ratsimp_gamma_args, gamma_product_simp, homogenize_gamma,gamma_magnitude_simp,
+linearp,gamma_arg_increase, my_complexity, and gamma_arg_decrease) are _not_ intended
+to be user level functions. 
+
+Of these functions, possibly `mtimesp`, `mplusp`, and `mexptp` should be standardized and made part the Maxima core functions.
+
+## Testing
+
+To run the test suite for the package `gamma_simp,` enter `batch(rtest_gamma_simp, 'test) at the Maxima prompt. To do the, you will need to copy the file `rtest_gamma_simp` to a folder that Maxima can find. 
+
 
 ## Thanks
 
