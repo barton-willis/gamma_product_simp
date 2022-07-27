@@ -10,8 +10,7 @@ To view the path that Maxima searches to find a package, enter `file_search_maxi
 
 ## Usage
 
-There are two user level functions in the package. They are
-`gamma_simp` and `factorial_simp.` Both of these functions take a single Maxima expression as input and both return a simplification of the input. 
+There are two user level functions in the package. They are `gamma_simp` and `factorial_simp.` Both of these functions take a single Maxima expression as input and both return a simplification of the input. 
 
 _Option varibles:_ The option variables `radsubstflag` and `ratfac` sometimes alter the results of `gamma_simp` and `factorial_simp.` 
 
@@ -42,7 +41,12 @@ _Related functions:_ `factcomb,` `minfactorial,` `makegamma,` and `makefactorial
 
 The function `gamma_simp` matches subexpressions of the input to various gamma function identities. The function `gamma_simp` does not explicitly use Maxima's pattern matcher.
 
+The function `factorial_simp` converts all factorials to gamma form. It then dispatches `gamma_simp` and converts back to factorial form. Any gamma functions in
+the input are protected from participating in the gamma function simplification process.
+
 ## Identities
+
+The function `gamma_simp` matches subexpressions of the input to the left hand side of each of the following identities and replaces them by the right side:
 
 $$ 
 \dfrac{\Gamma\left(z+1\right)}{z} = \Gamma\left(z\right), \quad z \in \mathbf{C_\neq 0} 
@@ -63,13 +67,10 @@ $$
 
 $$
 \Gamma\left(\mathrm{i} y\right) \Gamma\left(-\mathrm{i} y\right)  = 
-\frac{\uppi}{y\sinh\left(\uppi y\right)}, \quad \y \in \mathbf{R}_{\neq 0}
+\frac{\uppi}{y\sinh\left(\uppi y\right)}, \quad y \in \mathbf{R}_{\neq 0}
 $$
 
-
-
-
-See: http://dlmf.nist.gov/5.5.E1, 
+See: http://dlmf.nist.gov/5.5.E1, http://dlmf.nist.gov/5.5.E3, http://dlmf.nist.gov/5.4.E4, and http://dlmf.nist.gov/5.4.E3 
 
 
 ## Thanks
@@ -77,6 +78,5 @@ See: http://dlmf.nist.gov/5.5.E1,
 Part of the test file (`rtest_gamma_simp`) is adapted from the SymPy package for simplification of gamma functions. I thank the SymPy developers for making this resource available.
 
 Additionally, I thank readers of the Maxima list Oscar Benjamin, Stavros Macrakis, and Raymond Toy for suggestions and encouragement. Of course, all bugs are mine.
-
 
 _Reference:_ https://github.com/sympy/sympy/blob/master/sympy/simplify/tests/test_gammasimp.py 
