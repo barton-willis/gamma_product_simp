@@ -45,6 +45,17 @@ The last example shows the use of `makegamma` to pre-process the input.
 (%o6)	0
 ~~~
 
+## Details
+
+If `gamma_simp` is unable to simplify an expression to 0, it does not mean that the expression is nonvanishing. Example:
+
+~~~
+(%i7) gamma_simp(gamma(2*x)/gamma(x)-(2^(2*x-1)*gamma(x+1/2))/sqrt(%pi));
+
+(%o7) gamma(2*x)/gamma(x)-(2^(2*x-1)*gamma((2*x+1)/2))/sqrt(%pi)
+~~~
+
+
 ## Identities
 
 The function `gamma_simp` matches subexpressions of the input to the left hand side of each of the following identities and replaces them by the right side:
