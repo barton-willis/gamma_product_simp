@@ -12,7 +12,7 @@ To view the path that Maxima searches to find a package, enter `file_search_maxi
 
 There are two user level functions in the package. They are `gamma_simp` and `factorial_simp.` Both of these functions take a single Maxima expression as input and both return a simplification of the input. 
 
-The function `gamma_simp` matches subexpressions of the input to various gamma function identities and replaces the match with a simplification. The simplification process generally only converts gamma functions to gamma functions (not, for example
+The function `gamma_simp` matches subexpressions of the input to various gamma function identities and replaces the match with a simplification. The simplification process generally only converts gamma functions to gamma functions (not, for example,
 into beta functions), but depending on the value of the option variable `pochhammer_max_index,` the output can involve a pochhammer symbol.
 
 The function  `factorial_simp` works similarly. 
@@ -25,7 +25,7 @@ _Related functions:_ `factcomb,` `minfactorial,` `makegamma,` and `makefactorial
 
 ## Examples
 
-The last example shows the use of `makegamma.` 
+The last example shows the use of `makegamma` to pre-process the input.
 ~~~
 (%i1)	load(gamma_simp)$
 
@@ -47,7 +47,7 @@ The last example shows the use of `makegamma.`
 
 ## Implementation
 
-The function `gamma_simp` matches subexpressions of the input to various gamma function identities. The function `gamma_simp` does not explicitly use Maxima's pattern matcher.
+The function `gamma_simp` matches subexpressions of the input to various gamma function identities. The function `gamma_simp` uses `radsubst` to match the subexpressions, it does _not_ explicitly use Maxima's pattern matcher.
 
 The function `factorial_simp` converts all factorials to gamma form. It then dispatches `gamma_simp` and converts back to factorial form. Any gamma functions in
 the input are protected from participating in the gamma function simplification process.
@@ -85,6 +85,6 @@ See: http://dlmf.nist.gov/5.5.E1, http://dlmf.nist.gov/5.5.E3, http://dlmf.nist.
 
 Part of the test file (`rtest_gamma_simp`) is adapted from the SymPy package for simplification of gamma functions. I thank the SymPy developers for making this resource available.
 
-Additionally, I thank readers of the Maxima list Oscar Benjamin, Stavros Macrakis, and Raymond Toy for suggestions and encouragement. Of course, all bugs are mine.
+Additionally, I thank readers of the Maxima list including Oscar Benjamin, Stavros Macrakis, and Raymond Toy for suggestions and encouragement. Of course, all bugs are mine.
 
 _Reference:_ https://github.com/sympy/sympy/blob/master/sympy/simplify/tests/test_gammasimp.py 
