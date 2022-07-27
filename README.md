@@ -49,7 +49,7 @@ The last example shows the use of `makegamma` to pre-process the input.
 
 The functions `gamma_simp` and `factorial_simp` make a good effort to simplify every vanishing expression to zero. But if an expression doesn't simplify to zero, it does _not_ mean that the expression is non vanishing.
 
-Additionally, `gamma_simp` does not simplify semantically identical expressions to syntactically identical expressions. That is, `gamma_simp` does not produce a canonical form. An example:
+Additionally, `gamma_simp` does not always simplify semantically identical expressions to syntactically identical expressions. That is, `gamma_simp` does not produce a canonical form. An example:
 
 ~~~
 (%i1) load(gamma_simp)$
@@ -115,13 +115,13 @@ The remaining functions in the package are _not_ intended to be user level funct
 
 ## Testing
 
-To run the test suite for the package `gamma_simp,` enter `batch(rtest_gamma_simp, 'test)` at the Maxima prompt. To do the, you will need to copy the file `rtest_gamma_simp` to a folder that Maxima can find. 
+To run the test suite for the package `gamma_simp,` enter `batch(rtest_gamma_simp, 'test)` at the Maxima prompt. To do this, you will need to copy the file `rtest_gamma_simp` to a folder that Maxima can find. 
 
 
 ## Thanks
 
 Part of the test file (`rtest_gamma_simp`) is adapted from the SymPy package for simplification of gamma functions. I thank the SymPy developers for making this resource available.
 
-Additionally, I thank readers of the Maxima list including Oscar Benjamin, Stavros Macrakis, and Raymond Toy for suggestions and encouragement. Of course, all bugs are mine.
+Additionally, I thank readers of the Maxima list, including Oscar Benjamin, Stavros Macrakis, and Raymond Toy, for suggestions and encouragement. Of course, all bugs are mine.
 
 _Reference:_ https://github.com/sympy/sympy/blob/master/sympy/simplify/tests/test_gammasimp.py
