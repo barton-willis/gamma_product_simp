@@ -83,12 +83,8 @@ The function `factorial_simp` converts all factorials to gamma form. It then dis
 the input are protected from participating in the gamma function simplification process.
 
 The only user level functions in the pacakge are `gamma_simp` and `factorial_simp.`
-The remaining functions in the package (mtimesp, mplusp, mexptp, make_gamma_product_id,
-ratsimp_gamma_args, gamma_product_simp, homogenize_gamma,gamma_magnitude_simp,
-linearp,gamma_arg_increase, my_complexity, and gamma_arg_decrease) are _not_ intended
-to be user level functions. 
+The remaining functions in the package are _not_ intended to be user level functions. 
 
-Of these functions, possibly `mtimesp`, `mplusp`, and `mexptp` should be standardized and made part the Maxima core functions.
 
 ## Testing
 
