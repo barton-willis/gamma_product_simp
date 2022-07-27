@@ -1,6 +1,24 @@
-# gamma_product_simp
+# Gamma simp
 
-Maxima code for simplifying expressions that involve gamma functions. Here are some examples:
+Maxima code for simplifying expressions that involve gamma functions. 
+
+## Installation
+
+To use the `gamma_simp` package, copy the file `gamma_simp.mac` to a path that Maxima can find. To load the package, enter `load(gamma_simp)` at a Maxima command line.
+
+To view the path that Maxima searches to find a package, enter `file_search_maxima;` at a Maxima command line. 
+
+## Usage
+
+There are two user level functions in the package. They are
+`gamma_simp` and `factorial_simp.` Both of these functions take a single Maxima expression as input and both return a simplification of the input. 
+
+_Option varibles:_ The option variables `radsubstflag` and `ratfac` sometimes alter the results of `gamma_simp` and `factorial_simp.` 
+
+_Related functions:_ `factcomb,` `minfactorial,` `makegamma,` and `makefactorial.`
+
+## Examples
+
 ~~~
 (%i1)	load(gamma_simp)$
 
@@ -19,3 +37,16 @@ Maxima code for simplifying expressions that involve gamma functions. Here are s
 (%i6)	gamma_simp((k - n) *binomial(n,k)  + n * binomial(n-1,k));
 (%o6)	0
 ~~~
+
+## Implementation
+
+The function `gamma_simp` matches subexpressions of the input to various gamma function identities. The function `gamma_simp` does not explicitly use Maxima's pattern matcher.
+
+## Thanks
+
+Part of the test file (`rtest_gamma_simp`) is adapted from the SymPy package for simplification of gamma functions. I thank the SymPy developers for making this resource available.
+
+Additionally, I thank readers of the Maxima list Oscar Benjamin, Stavros Macrakis, and Raymond Toy for suggestions and encouragement. Of course, all bugs are mine.
+
+
+_Reference:_ https://github.com/sympy/sympy/blob/master/sympy/simplify/tests/test_gammasimp.py 
