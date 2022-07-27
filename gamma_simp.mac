@@ -30,15 +30,23 @@ ratsimp_gamma_args(e) := block([inflag : true,keepfloat : true],
   else map('ratsimp_gamma_args, e));
 
  /* This is the user level function. Actually, it's the only function
- in this file that is intended to be a user level function.*/
+ in this file that is intended to be a user level function.
+ 
+ Previously, the last statement was 
+   subst("*" = lambda([[q]], gamma_product_simp(xreduce("*",q))),e)
+Mapping gamma_product_simp over just products is maybe efficient, but
+doing this fails to simplify, for example, gamma(2*x+1)/2-x*gamma(2*x)
+to zero.
+ */
 
 gamma_simp(e) := block([opsubst : true],
   e : ratsimp_gamma_args(e),
   e : homogenize_gamma(e),
   e : gamma_arg_increase(gamma_arg_decrease(e)),
   e : subst("*" = lambda([[q]], gamma_magnitude_simp(xreduce("*",q))),e),
-  subst("*" = lambda([[q]], gamma_product_simp(xreduce("*",q))),e));
+  gamma_product_simp(e)); 
 
+/* This function simplifies a product of two or more gamma functions. */
  gamma_product_simp(e) := block([a,N,id,ee,dn,fn,keepfloat : true],
     ee : e,    
     a : map('first, gatherargs(e,'gamma)),
