@@ -44,7 +44,7 @@ The function `gamma_simp` matches subexpressions of the input to various gamma f
 
 ## Identities
 
-\[ \Gamma\left(z+1\right)=z\Gamma\left(z\right),\]
+$$ \Gamma\left(z+1\right)=z\Gamma\left(z\right),$$ 
 
 ## Thanks
 
