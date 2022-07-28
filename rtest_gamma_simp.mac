@@ -177,7 +177,7 @@ gamma_simp(e^2/gamma(k + 1));
 k/gamma(k)$
 
 gamma_simp(gamma(2*k)/gamma(k)*gamma(k + 1/2+1/3)*gamma(k + 1/2+2/3));
-3*2^(2*k + 1)*3^(-3*k - 2)*sqrt(%pi)*gamma(3*k + 3/2)/2$
+sqrt(%pi)*3^(-3*k-1)*2^(2*k)*gamma((6*k+3)/2)$
 
 gamma_simp(makegamma((x + 1)*factorial(x)/gamma(y)));
 gamma(x + 2)/gamma(y)$
@@ -195,7 +195,7 @@ gamma(n + 1)*gamma(k + n + x)/(gamma(k + 1)*gamma(n + x)*gamma(-k + n + 1))$
 */
 
 gamma_simp(gamma(2*k)/gamma(k)*gamma(-k - 1/2));
- (-2**(2*k + 1)*sqrt(%pi)/(2*((2*k + 1)*cos(%pi*k))))$
+-((%pi*2^(2*k))/((2*sqrt(%pi)*k+sqrt(%pi))*sin((2*%pi*k+%pi)/2)))$
 
 gamma_simp(gamma(k)*gamma(k + 1/3)*gamma(k + 2/3))/gamma(k*3/2);
 (3*2**(3*k + 1)*3**(-3*k - 1/2)*sqrt(%pi)*gamma(k*3/2 + 1/2)/2)$
@@ -231,7 +231,7 @@ gamma_simp(e);
 gamma((3*n+1)/3)*gamma((3*n+2)/3)$
 
 gamma_simp(gamma(4*n + 1/2)/gamma(2*n - 3/4));
-2**(4*n - 5/2)*(8*n - 3)*gamma(2*n + 3/4)/sqrt(%pi)$
+((64*n^2-32*n+3)*2^((8*n-3)/2-3)*gamma((8*n-3)/4+1/2))/sqrt(%pi)$
 
 (e : gamma(exp(i)),0);
 0$
