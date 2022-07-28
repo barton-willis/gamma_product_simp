@@ -94,7 +94,7 @@ y\right)=\dfrac{\uppi}{\cosh\left(\uppi y\right)},
 $$
 
 $$
-\Gamma\left(\mathrm{i} y\right) \Gamma\left(-\mathrm{i} y\right)  = 
+\Gamma\left(\mathrm{i} \, y\right) \Gamma\left(-\mathrm{i} \, y\right)  = 
 \frac{\uppi}{y\sinh\left(\uppi y\right)}, \quad y \in \mathbf{R}_{\neq 0}
 $$
 

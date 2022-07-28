@@ -37,9 +37,13 @@ ratsimp_gamma_args(e) := block([inflag : true,keepfloat : true],
 Mapping gamma_product_simp over just products is maybe efficient, but
 doing this fails to simplify, for example, gamma(2*x+1)/2-x*gamma(2*x)
 to zero.
- */
 
-gamma_simp(e) := block([opsubst : true],
+The function ratsubst does not respect the value of keepfloat--this
+is its documented behavior. The gamma_simp code is a heavy user of
+ratsubst--fixing this bugs that are a result of ratsubst converting
+floats to rationals likely isn't worthwhile.*/
+
+gamma_simp(e) := block([opsubst : true,keepfloat : true],
   e : ratsimp_gamma_args(e),
   e : homogenize_gamma(e),
   e : gamma_arg_increase(gamma_arg_decrease(e)),

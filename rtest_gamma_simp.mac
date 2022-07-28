@@ -212,6 +212,9 @@ gamma(n+3)/(gamma((2*k+3)/2)*gamma((2*n-2*k+5)/2))$
 gamma_simp(binomial(n + 2, k + 2.0));
 binomial(n + 2, k + 2.0)$
 
+/* The function ratsubst does not respect the value of keepfloat--this
+   is its documented behavior. The gamma_simp code is a heavy user of
+   ratsubst--fixing this bug likely isn't worthwhile. */
 gamma_simp(makegamma(binomial(n + 2, k + 2.0)));
 gamma(n + 3)/(gamma(k + 3.0)*gamma(-k + n + 1))$
 
