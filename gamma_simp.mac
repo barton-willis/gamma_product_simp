@@ -98,7 +98,7 @@ homogenize_gamma(e) := block([a,ee : e, keepfloat : true],
    a : map('first, gatherargs(e,'gamma)),
    for ak in a do (
       for bk in a do (
-         if featurep(ak-bk,'integer) and ak-bk > 0 then (
+         if featurep(ratsimp(ak-bk),'integer) and ak-bk > 0 then (
             e : ratsubst(pochhammer(bk,ak-bk)*gamma(bk), gamma(ak),e),
             e : facsum(e,gamma(bk))))),
       if is(e # ee) then homogenize_gamma(e) else e)$ 
