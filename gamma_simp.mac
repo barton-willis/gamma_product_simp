@@ -61,7 +61,7 @@ gamma_simp(e) := block([opsubst : true,keepfloat : true],
     for ak in a do (
         for bk in a do (
         dn : ratsimp(ak+bk),
-        if integerp(dn) and dn >= 0 and (not featurep(ak,'integer)) then (
+        if featurep(dn,'integer) and dn >= 0 and (not featurep(ak,'integer)) then (
             e : ratsubst(pochhammer(1-ak, dn-1) *%pi/sin(%pi*ak),
                 gamma(ak)*gamma(bk),e)))),
 
