@@ -198,8 +198,8 @@ gamma(n + 1)*gamma(k + n + x)/(gamma(k + 1)*gamma(n + x)*gamma(-k + n + 1))$
 gamma_simp(gamma(2*k)/gamma(k)*gamma(-k - 1/2));
 -((%pi*2^(2*k))/((2*sqrt(%pi)*k+sqrt(%pi))*sin((2*%pi*k+%pi)/2)))$
 
-gamma_simp(gamma(k)*gamma(k + 1/3)*gamma(k + 2/3))/gamma(k*3/2);
-(3*2**(3*k + 1)*3**(-3*k - 1/2)*sqrt(%pi)*gamma(k*3/2 + 1/2)/2)$
+gamma_simp(gamma(k)*gamma(k + 1/3)*gamma(k + 2/3)/gamma(k*3/2));
+sqrt(%pi)*3^(1/2-3*k)*2^(3*k)*gamma((3*k)/2+1/2)$
 
 gamma_simp(gamma(1/4)/gamma(5/4));
 4$
