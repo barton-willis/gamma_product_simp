@@ -64,7 +64,7 @@ gamma_simp(e) := block([opsubst : true,keepfloat : true, inflag : false],
         if featurep(dn,'integer) and dn >= 0 and (not featurep(ak,'integer)) then (
             e : ratsubst(pochhammer(1-ak, dn-1) *%pi/sin(%pi*ak),
                 gamma(ak)*gamma(bk),e)))),
-
+    
     /* Do prod(gamma(x+k/n),k,0,n-1) ==> gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))
     */
     fn : make_gamma_product_id(),
@@ -81,8 +81,9 @@ gamma_simp(e) := block([opsubst : true,keepfloat : true, inflag : false],
             e : ratsubst(pochhammer(2*bk,dn)*gamma(bk+1/2)/(sqrt(%pi)*2^(1-2*bk)),
                          gamma(ak)/gamma(bk),e)))),
     
-    /* When the expression has changed, recurse; otherwise return e.*/       
-    if is(e # ee) then gamma_product_simp(e) else e)$
+    /* When the expression has changed, recurse; otherwise return e.*/
+    ee : factor(ee),   
+    if is(factor(e) # ee) then gamma_product_simp(e) else e)$
 
 /* When n is a positive integer and the expression e involves both
    gamma(X+n) and gamma(X), do gamma(X+n) ==> pochhammer(X,n) gamma(X).

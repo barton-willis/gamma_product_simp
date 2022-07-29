@@ -402,8 +402,31 @@ gamma_simp(1/(x*gamma(x)));
 gamma_simp(gamma(%i * a)*gamma(-%i*a));
 %pi/(a*sinh(%pi*a))$
 
+/* See https://mathematica.stackexchange.com/questions/124546/to-what-extent-can-one-simplify-these-products-of-gamma-functions */
+
+factorial_simp((1/10)*(23 + 10*n)*(1 + n)!*(2 + n)!*(1 + 2*n)!*(3 + 2*n)!*((1/10)*(7 + 10*n))!*
+  ((1/10)*(9 + 10*n))!*((1/10)*(11 + 10*n))!*((1/10)*(13 + 10*n))!*((1/10)*(17 + 10*n))!*
+  ((1/10)*(19 + 10*n))!*((1/10)*(21 + 10*n))!);
+  (4*n^3+18*n^2+26*n+12)*(n+1)!^2*(2*n+1)!^2*((10*n+17)/10-1)!*((10*n+19)/10-1)!*
+  ((10*n+21)/10-1)!*((10*n+27)/10-1)!*((10*n+29)/10-1)!*((10*n+31)/10-1)!*
+  ((10*n+33)/10-1)!$
+
+  (xxx : gamma(1/2 + k)*gamma(7/10 + k)*gamma(9/10 + k)*gamma(1 + k)^6*
+  gamma(11/10 + k)*gamma(13/10 + k)*gamma(3/2 + k)*gamma(17/10 + k)*
+  gamma(19/10 + k)*gamma(21/10 + k)*gamma(23/10 + k)*gamma(5/2 + k)*
+  gamma(13/5 + k)*gamma(27/10 + k)*gamma(29/10 + k)*gamma(3 + k)*
+  gamma(31/10 + k)*gamma(33/10 + k)*gamma(7/2 + k)*gamma(18/5 + k)*
+  gamma(37/10 + k)*gamma(39/10 + k)*gamma(41/10 + k)*gamma(43/10 + k)*
+  gamma(9/2 + k)*gamma(23/5 + k)*gamma(47/10 + k)*gamma(49/10 + k)*
+  gamma(51/10 + k)*gamma(53/10 + k)*gamma(28/5 + k), yyy : gamma_simp(xxx),0);
+  0$
+  
+float_approx_equal(subst(k=1,xxx),subst(k=1,yyy));
+true$
+ 
+
 /* Clean up */
-(remvalue(X,e),0);
+(remvalue(X,e,xxx,yyy),0);
 0$
 
 /* This test is fragile. But it does check if the gamma_simp code introduces
