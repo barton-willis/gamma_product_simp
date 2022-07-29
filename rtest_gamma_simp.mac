@@ -420,10 +420,17 @@ factorial_simp((1/10)*(23 + 10*n)*(1 + n)!*(2 + n)!*(1 + 2*n)!*(3 + 2*n)!*((1/10
   gamma(9/2 + k)*gamma(23/5 + k)*gamma(47/10 + k)*gamma(49/10 + k)*
   gamma(51/10 + k)*gamma(53/10 + k)*gamma(28/5 + k), yyy : gamma_simp(xxx),0);
   0$
+
 trigrat(gamma_simp(subst(k=1,xxx/yyy)));
 1$
 
- 
+/*See: https://math.stackexchange.com/questions/237775/how-is-this-expression-with-the-gamma-function-simplify */
+gamma_simp(gamma(a+b)*gamma(a+1)/(gamma(a)*gamma(a+b+1)));
+a/(b+a)$
+
+/*See: https://mathematica.stackexchange.com/questions/164504/simplify-fraction-of-gamma-functions  */
+gamma_simp(sqrt(gamma(2*n)/gamma(2*n+3)));
+1/(2*sqrt(n*(2*n^2+3*n+1)))$
 
 /* Clean up */
 (remvalue(X,e,xxx,yyy),0);
