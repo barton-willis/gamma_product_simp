@@ -420,9 +420,9 @@ factorial_simp((1/10)*(23 + 10*n)*(1 + n)!*(2 + n)!*(1 + 2*n)!*(3 + 2*n)!*((1/10
   gamma(9/2 + k)*gamma(23/5 + k)*gamma(47/10 + k)*gamma(49/10 + k)*
   gamma(51/10 + k)*gamma(53/10 + k)*gamma(28/5 + k), yyy : gamma_simp(xxx),0);
   0$
-  
-float_approx_equal(subst(k=1,xxx),subst(k=1,yyy));
-true$
+trigrat(gamma_simp(subst(k=1,xxx/yyy)));
+1$
+
  
 
 /* Clean up */
