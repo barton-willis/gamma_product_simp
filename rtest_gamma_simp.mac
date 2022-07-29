@@ -432,6 +432,10 @@ a/(b+a)$
 gamma_simp(sqrt(gamma(2*n)/gamma(2*n+3)));
 1/(2*sqrt(n*(2*n^2+3*n+1)))$
 
+/*See: https://resources.wolframcloud.com/FunctionRepository/resources/GammaSimplify  */
+gamma_simp(gamma(z-1)+gamma(z));
+gamma(z-1)*z$
+
 /* Clean up */
 (remvalue(X,e,xxx,yyy),0);
 0$
