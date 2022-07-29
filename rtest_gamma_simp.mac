@@ -95,6 +95,7 @@ gamma_simp(x/gamma(x + 1));
 gamma_simp((x + 1)^2/gamma(x + 2));
 (x + 1)/gamma(x + 1)$
 
+/* Another answer is x*(x+2)*gamma(x). Let's be happy with (x+2)*gamma(x+1) */
 gamma_simp(x*gamma(x) + gamma(x + 3)/(x + 2));
 (x+2)*gamma(x+1)$
 
@@ -393,6 +394,9 @@ true$
 /* Bug #2:  misses simplification for gamma(1/2-x) * gamma(1/2+x) #2 */
 gamma_simp(gamma(1/2-x) * gamma(1/2+x));
 -(%pi/sin((2*%pi*x-%pi)/2))$
+
+gamma_simp(1/(x*gamma(x)));
+1/gamma(x+1)$
 
 /* Clean up */
 (remvalue(X,e),0);
