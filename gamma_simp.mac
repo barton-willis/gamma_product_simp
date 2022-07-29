@@ -172,7 +172,7 @@ gamma_arg_decrease(e) := block([a, ee : e,ea],
    We do this by substituting a gensym for gamma. After converting back to factorials, 
    this substitution is reverted.*/         
 factorial_simp(e) := block([g : gensym(),opsubst : true, keepfloat : true],
-  e : subst('gamma=g,e),
+  e : opsubst('gamma=g,e),
   e : subst("!" = lambda([q], gamma(q+1)),e),
   e : gamma_simp(e),
   e : makefact(e),
