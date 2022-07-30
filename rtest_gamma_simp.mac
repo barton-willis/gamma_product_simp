@@ -436,6 +436,14 @@ gamma_simp(sqrt(gamma(2*n)/gamma(2*n+3)));
 gamma_simp(gamma(z-1)+gamma(z));
 gamma(z-1)*z$
 
+/* From rtest_gamma */
+minfactorial(factorial(factorial(n)/factorial(n-1)));
+factorial(factorial(n)/factorial(n-1));
+
+/* From rtest10 */
+minfactorial(n!/(n+1)!);
+1/(n+1)$
+
 /* Clean up */
 (remvalue(X,e,xxx,yyy),0);
 0$

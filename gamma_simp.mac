@@ -8,7 +8,7 @@ See LICENSE.md for licensing information.
  
  /* The CL translator suggests adding the following: */
  eval_when(translate,declare_translated(gamma_arg_increase,gamma_arg_decrease,
-         gamma_product_simp,homogenize_gamma))$
+         gamma_product_simp,homogenize_gamma,gamma_magnitude_simp))$
 
  load("opsubst");
 
@@ -43,7 +43,7 @@ is its documented behavior. The gamma_simp code is a heavy user of
 ratsubst--fixing this bugs that are a result of ratsubst converting
 floats to rationals likely isn't worthwhile.*/
 
-gamma_simp(e) := block([opsubst : true,keepfloat : true, inflag : false],
+gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true, inflag : false],
   e : ratsimp_gamma_args(e),
   e : homogenize_gamma(e),
   e : gamma_arg_increase(gamma_arg_decrease(e)),
