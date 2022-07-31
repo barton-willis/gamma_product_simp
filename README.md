@@ -122,6 +122,6 @@ To run the test suite for the package `gamma_simp,` enter `batch(rtest_gamma_sim
 
 Part of the test file (`rtest_gamma_simp`) is adapted from the [SymPy package](https://www.sympy.org/en/index.html) for simplification of gamma functions. I thank the SymPy developers for making this resource available.
 
-Additionally, I thank readers of the Maxima list, including Oscar Benjamin, Stavros Macrakis, and Raymond Toy, for suggestions and encouragement. Of course, all bugs are mine.
+Additionally, I thank readers of the Maxima list, including Oscar Benjamin, Stavros Macrakis, Ray Rogers, and Raymond Toy, for suggestions and encouragement. Of course, all bugs are mine.
 
 _Reference:_ https://github.com/sympy/sympy/blob/master/sympy/simplify/tests/test_gammasimp.py
