@@ -460,21 +460,31 @@ gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)$
 gamma_simp(makegamma(pochhammer(a,n) = pochhammer(a,n+1)/(a+n)));
 gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)$
 
-/* DLMF: http://dlmf.nist.gov/5.2.E7 */
+/* DLMF: http://dlmf.nist.gov/5.2.E7 . A better answer is 
+   pochhammer(a,2*n)=pochhammer(a,2*n)$*/
 gamma_simp(makegamma(pochhammer(a,2*n) = 2^(2*n) * pochhammer(a/2,n) * pochhammer((a+1)/2,n)));
-pochhammer(a,2*n)=pochhammer(a,2*n)$
+gamma(2*n+a)/gamma(a)=gamma(2*n+a)/gamma(a)$
 
-/*DLMF: http://dlmf.nist.gov/5.2.E8 */
+/*DLMF: http://dlmf.nist.gov/5.2.E8 . A better answer is 
+ pochhammer(a,2*n+1)=pochhammer(a,2*n+1)$ */
 gamma_simp(makegamma(pochhammer(a,2*n+1) = 2^(2*n+1) * pochhammer(a/2,n+1) * pochhammer((a+1)/2,n)));
-pochhammer(a,2*n+1)=pochhammer(a,2*n+1)$
+gamma(2*n+a+1)/gamma(a)=gamma(2*n+a+1)/gamma(a)$
 
 /* See https://math.stackexchange.com/questions/656505/an-identity-involving-the-pochhammer-symbol 
-But declaring x to be integer gives infinite loop. The final radcan converts
-1728^x/3^(3*x) to 2^(6*x). And that allows the test to pass.*/
+Also see bug: gamma_simp not idempotent #6 */
 
-radcan(gamma_simp(makegamma((6*x)!/(3*x)! =( 1728^x * pochhammer(1/6,x)*pochhammer(1/2,x) 
-* pochhammer(5/6,x)))));
-(2^(6*x)*gamma((6*x+1)/2))/sqrt(%pi)=(2^(6*x)*gamma((6*x+1)/2))/sqrt(%pi)$
+(xxx : (6*x)!/(3*x)! = ( 1728^x * pochhammer(1/6,x)*pochhammer(1/2,x) * pochhammer(5/6,x)),0);
+0$
+
+gamma_simp(makegamma(xxx));
+(2^(6*x)*gamma((6*x+1)/2))/sqrt(%pi)=(1728^x*gamma((6*x+1)/2))/(sqrt(%pi)*3^(3*x))$
+
+is(gamma_simp(makegamma(xxx)) = gamma_simp(gamma_simp(makegamma(xxx))));
+true$
+
+gamma_simp(makegamma((6*n)!/(3*n)! =( 1728^n * pochhammer(1/6,n)*pochhammer(1/2,n) 
+* pochhammer(5/6,n))));
+(2^(6*n)*gamma((6*n+1)/2))/sqrt(%pi)=(1728^n*gamma((6*n+1)/2))/(sqrt(%pi)*3^(3*n))$
 
 /* Clean up */
 (remvalue(X,e,xxx,yyy),killcontext(cntx), remvalue(cntx), 0);
