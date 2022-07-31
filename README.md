@@ -4,7 +4,7 @@ Maxima code for simplifying expressions that involve gamma and factorial functio
 
 ## Installation
 
-To use the `gamma_simp` package, copy the file `gamma_simp.mac` to a folder that Maxima can find. To load the package, enter `load(gamma_simp)` at the Maxima command line.
+To use the `gamma_simp` package, copy the files `gamma_simp.mac` and `operator_p.lisp` to a folder that Maxima can find. The folder will need to be searchable for both `*.mac` and `*.lisp` files. To load the package, enter `load(gamma_simp)` at the Maxima command line.
 
 To view the paths that Maxima searches to find a package, enter `file_search_maxima;` at a Maxima command line. 
 
