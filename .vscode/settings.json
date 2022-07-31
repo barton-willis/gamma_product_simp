@@ -1,0 +1,29 @@
+{
+    "cSpell.words": [
+        "buildq",
+        "facsum",
+        "featurep",
+        "freeof",
+        "gatherargs",
+        "gensym",
+        "imagpart",
+        "inflag",
+        "keepfloat",
+        "linearp",
+        "lopow",
+        "mapatom",
+        "mexptp",
+        "mtimesp",
+        "numberp",
+        "numfactor",
+        "opsubst",
+        "pochhammer",
+        "polynomialp",
+        "prederror",
+        "ratsimp",
+        "ratsubst",
+        "realpart",
+        "subexpressions",
+        "xreduce"
+    ]
+}

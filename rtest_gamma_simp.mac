@@ -67,7 +67,7 @@ DAMAGE.
 
 */
 
-(load("gamma_simp"),radsubstflag : false, ratfac : false, domain : real,
+(load("gamma_simp"),radsubstflag : true, ratfac : true, domain : real,
 	m1pbranch : false, reset(float_approx_equal_tolerance), 0);
 0$
 
@@ -444,15 +444,48 @@ factorial(factorial(n)/factorial(n-1));
 minfactorial(n!/(n+1)!);
 1/(n+1)$
 
+/* pochhammer tests */
+
+(cntx : newcontext(), declare(m,integer),declare(n,integer),0);
+0$
+
+gamma_simp(makegamma(pochhammer(a,n) = (a+n-1)* pochhammer(a-1,n)/(a-1)));
+gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)$
+
+gamma_simp(makegamma(pochhammer(a,n) = (a/(a+n))* pochhammer(a+1,n)));
+gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)$
+
+gamma_simp(makegamma(pochhammer(a,n) = (a + n-1)* pochhammer(a,n-1)));
+gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)$
+
+gamma_simp(makegamma(pochhammer(a,n) = pochhammer(a,n+1)/(a+n)));
+gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)$
+
+/* DLMF: http://dlmf.nist.gov/5.2.E7 */
+gamma_simp(makegamma(pochhammer(a,2*n) = 2^(2*n) * pochhammer(a/2,n) * pochhammer((a+1)/2,n)));
+pochhammer(a,2*n)=pochhammer(a,2*n)$
+
+/*DLMF: http://dlmf.nist.gov/5.2.E8 */
+gamma_simp(makegamma(pochhammer(a,2*n+1) = 2^(2*n+1) * pochhammer(a/2,n+1) * pochhammer((a+1)/2,n)));
+pochhammer(a,2*n+1)=pochhammer(a,2*n+1)$
+
+/* See https://math.stackexchange.com/questions/656505/an-identity-involving-the-pochhammer-symbol 
+But declaring x to be integer gives infinite loop. */
+
+gamma_simp(makegamma((6*x)!/(3*x)! =( 1728^x * pochhammer(1/6,x)*pochhammer(1/2,x) 
+* pochhammer(5/6,x))));
+(2^(6*x)*gamma((6*x+1)/2))/sqrt(%pi)=(2^(6*x)*gamma((6*x+1)/2))/sqrt(%pi)$
+
 /* Clean up */
-(remvalue(X,e,xxx,yyy),0);
+(remvalue(X,e,xxx,yyy),killcontext(cntx), remvalue(cntx), 0);
 0$
 
 /* This test is fragile. But it does check if the gamma_simp code introduces
 any extraneous global variables */
 values;
-[nextlayerfactor,facsum_combine]$
+[nextlayerfactor, facsum_combine, bestlength, trylength]$
 
+/* Did gamma_simp introduce any new contexts?*/
 contexts;
 [initial,global]$
 
