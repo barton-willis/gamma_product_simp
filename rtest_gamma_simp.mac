@@ -410,6 +410,8 @@ factorial_simp((1/10)*(23 + 10*n)*(1 + n)!*(2 + n)!*(1 + 2*n)!*(3 + 2*n)!*((1/10
   ((10*n+21)/10-1)!*((10*n+27)/10-1)!*((10*n+29)/10-1)!*((10*n+31)/10-1)!*
   ((10*n+33)/10-1)!$
 
+/* This test takes a long time. But it did reveal a bug in gamma_simp (that has
+   been fixed). So let's keep it.*/
   (xxx : gamma(1/2 + k)*gamma(7/10 + k)*gamma(9/10 + k)*gamma(1 + k)^6*
   gamma(11/10 + k)*gamma(13/10 + k)*gamma(3/2 + k)*gamma(17/10 + k)*
   gamma(19/10 + k)*gamma(21/10 + k)*gamma(23/10 + k)*gamma(5/2 + k)*
@@ -420,8 +422,19 @@ factorial_simp((1/10)*(23 + 10*n)*(1 + n)!*(2 + n)!*(1 + 2*n)!*(3 + 2*n)!*((1/10
   gamma(51/10 + k)*gamma(53/10 + k)*gamma(28/5 + k), yyy : gamma_simp(xxx),0);
   0$
 
+factor(yyy);
+(%pi^10*(k+1)*(k+2)*(2*k+3)^3*(2*k+5)^2*(2*k+7)*(5*k+13)^3*(5*k+18)^2*
+(5*k+23)*(10*k+7)^4*(10*k+9)^4*(10*k+11)^4*(10*k+13)^4*(10*k+17)^3*
+(10*k+19)^3*(10*k+21)^3*(10*k+23)^3*(10*k+27)^2*(10*k+29)^2*(10*k+31)^2*
+(10*k+33)^2*(10*k+37)*(10*k+39)*(10*k+41)*(10*k+43)*5^(-25*k-61)*gamma(k+1)^7*
+gamma((5*k+13)/5)^4*gamma((10*k+7)/2)^5)/(34359738368*(2*k+1))$
+
 trigrat(gamma_simp(subst(k=1,xxx/yyy)));
 1$
+
+gamma_simp(subst(k=3/8,xxx/yyy));
+1$
+
 
 /*See: https://math.stackexchange.com/questions/237775/how-is-this-expression-with-the-gamma-function-simplify */
 gamma_simp(gamma(a+b)*gamma(a+1)/(gamma(a)*gamma(a+b+1)));
@@ -465,7 +478,7 @@ gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)$
 gamma_simp(makegamma(pochhammer(a,2*n) = 2^(2*n) * pochhammer(a/2,n) * pochhammer((a+1)/2,n)));
 gamma(2*n+a)/gamma(a)=gamma(2*n+a)/gamma(a)$
 
-/*DLMF: http://dlmf.nist.gov/5.2.E8 . A better answer is 
+/* DLMF: http://dlmf.nist.gov/5.2.E8 . A better answer is 
  pochhammer(a,2*n+1)=pochhammer(a,2*n+1)$ */
 gamma_simp(makegamma(pochhammer(a,2*n+1) = 2^(2*n+1) * pochhammer(a/2,n+1) * pochhammer((a+1)/2,n)));
 gamma(2*n+a+1)/gamma(a)=gamma(2*n+a+1)/gamma(a)$
