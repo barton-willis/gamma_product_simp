@@ -21,6 +21,8 @@ mexptp(e) := not mapatom(e) and part(e,0) = "^";
  make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
     lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
 
+/* When gamma_simp introduces a trigonometric function, dispatch gamma_simp_trigsimp
+   on the trigonometric term.*/
 gamma_simp_trigsimp(e) := trigexpand(trigsimp(e));
 
 /* Apply ratsimp only to the arguments of gamma. Doing this is an effort to allow
@@ -45,7 +47,8 @@ is its documented behavior. The gamma_simp code is a heavy user of
 ratsubst--fixing this bugs that are a result of ratsubst converting
 floats to rationals likely isn't worthwhile.*/
 
-gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true, inflag : false],
+gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true, 
+   inflag : false, radsubstflag : false],
   e : ratsimp_gamma_args(e),
   e : homogenize_gamma(e),
   e : gamma_arg_increase(gamma_arg_decrease(e)),
@@ -85,7 +88,7 @@ gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true, infl
     
     /* When the expression has changed, recurse; otherwise return e.*/
     ee : factor(ee),   
-    if is(factor(e) # ee) then gamma_product_simp(e) else e)$
+    if is(factor(e) # ee) then gamma_product_simp(homogenize_gamma(e)) else e)$
 
 /* When n is a positive integer and the expression e involves both
    gamma(X+n) and gamma(X), do gamma(X+n) ==> pochhammer(X,n) gamma(X).

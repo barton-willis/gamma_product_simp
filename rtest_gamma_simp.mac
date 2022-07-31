@@ -67,8 +67,7 @@ DAMAGE.
 
 */
 
-(load("gamma_simp"),radsubstflag : true, ratfac : true, domain : real,
-	m1pbranch : false, reset(float_approx_equal_tolerance), 0);
+(load("gamma_simp"),ratfac : true, domain : real,m1pbranch : false, reset(float_approx_equal_tolerance), 0);
 0$
 
 gamma_simp(gamma(x));
@@ -470,10 +469,11 @@ gamma_simp(makegamma(pochhammer(a,2*n+1) = 2^(2*n+1) * pochhammer(a/2,n+1) * poc
 pochhammer(a,2*n+1)=pochhammer(a,2*n+1)$
 
 /* See https://math.stackexchange.com/questions/656505/an-identity-involving-the-pochhammer-symbol 
-But declaring x to be integer gives infinite loop. */
+But declaring x to be integer gives infinite loop. The final radcan converts
+1728^x/3^(3*x) to 2^(6*x). And that allows the test to pass.*/
 
-gamma_simp(makegamma((6*x)!/(3*x)! =( 1728^x * pochhammer(1/6,x)*pochhammer(1/2,x) 
-* pochhammer(5/6,x))));
+radcan(gamma_simp(makegamma((6*x)!/(3*x)! =( 1728^x * pochhammer(1/6,x)*pochhammer(1/2,x) 
+* pochhammer(5/6,x)))));
 (2^(6*x)*gamma((6*x+1)/2))/sqrt(%pi)=(2^(6*x)*gamma((6*x+1)/2))/sqrt(%pi)$
 
 /* Clean up */
