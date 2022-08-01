@@ -460,7 +460,7 @@ minfactorial(n!/(n+1)!);
 
 /* pochhammer tests */
 
-(cntx : newcontext(), declare(m,integer),declare(n,integer),0);
+(cntx : newcontext(), activate(cntx), declare(m,integer),declare(k,integer), declare(n,integer),declare(N,integer), 0);
 0$
 
 gamma_simp(makegamma(pochhammer(a,n) = (a+n-1)* pochhammer(a-1,n)/(a-1)));
@@ -516,6 +516,25 @@ gamma_simp(gamma(1/2 + %i*3/8)*gamma(1/2-%i*3/8));
 /* Tests from Ray Rodgers */
 is(gamma_simp(makegamma(pochhammer(a+n,n) = pochhammer(a,2*n)/pochhammer(a,n))));
 true$
+
+is(gamma_simp(makegamma(pochhammer(k*n+a,n) = pochhammer(a,(k+1)*n)/pochhammer(a,k*n))));
+true$
+
+/* gamma_simp doesn't yield a canonical form for this case, but it does 
+simplify the difference to zero.*/
+
+featurep(n,'integer);
+true$
+
+block([ratfac : false],gamma_simp(makegamma(pochhammer(a-n,n) - pochhammer(1-a,n)*(-1)^n)));
+0$
+
+/* Same story for this case. But this case needs a final expand--OK*/
+trigexpand(expand(gamma_simp(makegamma( pochhammer(a-k*n,n) - (-1)^n*pochhammer((1-a),k*n)/pochhammer(1-a,(k-1)*n)))));
+0$
+
+block([ratfac : false], gamma_simp(makegamma(1/pochhammer(a-n,n)  - (-1)^n/pochhammer(1-a,n))));
+0$
 
 /* and more tests */
 
