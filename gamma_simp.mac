@@ -12,6 +12,7 @@ See LICENSE.md for licensing information.
 
  load("opsubst");
 
+/* This function is inflag sensitive. */
 mtimesp(e) := not mapatom(e) and part(e,0) = "*";
 
   /* Return a lambda form that generates the Gauss gamma function 
@@ -29,12 +30,6 @@ ratsimp_gamma_args(e) := block([keepfloat : true],
 
  /* The functions gamma_simp and factorial_simp are the only two user level 
 functions in this file. 
- 
- Previously, the last statement was 
-   subst("*" = lambda([[q]], gamma_product_simp(xreduce("*",q))),e)
-Mapping gamma_product_simp over just products is maybe efficient, but
-doing this fails to simplify, for example, gamma(2*x+1)/2-x*gamma(2*x)
-to zero.
 
 The function ratsubst does not respect the value of keepfloat--this
 is its documented behavior. The gamma_simp code is a heavy user of
