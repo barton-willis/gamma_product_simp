@@ -526,14 +526,14 @@ simplify the difference to zero.*/
 featurep(n,'integer);
 true$
 
-block([ratfac : false],gamma_simp(makegamma(pochhammer(a-n,n) - pochhammer(1-a,n)*(-1)^n)));
+trigexpand(gamma_simp(makegamma(pochhammer(a-n,n) - pochhammer(1-a,n)*(-1)^n)));
 0$
 
 /* Same story for this case. But this case needs a final expand--OK*/
 trigexpand(expand(gamma_simp(makegamma( pochhammer(a-k*n,n) - (-1)^n*pochhammer((1-a),k*n)/pochhammer(1-a,(k-1)*n)))));
 0$
 
-block([ratfac : false], gamma_simp(makegamma(1/pochhammer(a-n,n)  - (-1)^n/pochhammer(1-a,n))));
+trigexpand(gamma_simp(makegamma(1/pochhammer(a-n,n)  - (-1)^n/pochhammer(1-a,n))));
 0$
 
 /* and more tests */
@@ -548,7 +548,7 @@ factorial_simp((1100*(23/10)!*(27/10)!*(29/10)!*(31/10)!)/(8091*(17/10)!*(19/10)
 /* This test is fragile. But it does check if the gamma_simp code introduces
 any extraneous global variables */
 values;
-[nextlayerfactor, facsum_combine, bestlength, trylength]$
+[nextlayerfactor, facsum_combine]$
 
 /* Did gamma_simp introduce any new contexts?*/
 contexts;

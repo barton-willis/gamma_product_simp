@@ -18,10 +18,6 @@ See LICENSE.md for licensing information.
  make_gamma_product_id() := buildq([x : gensym(), k : gensym(),n : gensym()],
     lambda([x,n], prod(gamma(x+k/n),k,0,n-1) = gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))));
 
-/* When gamma_simp introduces a trigonometric function, dispatch gamma_simp_trigsimp
-   on the trigonometric term.*/
-gamma_simp_trigsimp(e) := trigexpand(trigsimp(e));
-
 /* Apply ratsimp only to the arguments of gamma. Doing this is an effort to allow
    ratsubst to make more matches to gamma expressions without dispatching 
    ratsimp on the entire expression.*/
@@ -65,7 +61,7 @@ gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true,
         for bk in a do (
         dn : ratsimp(ak+bk),
         if featurep(dn,'integer) and dn >= 0 and (not featurep(ak,'integer)) then (
-            e : ratsubst(pochhammer(1-ak, dn-1) *%pi/gamma_simp_trigsimp(sin(%pi*ak)),
+            e : ratsubst(pochhammer(1-ak, dn-1) *%pi/(sin(%pi*ak)),
                 gamma(ak)*gamma(bk),e)))),
     
     /* Do prod(gamma(x+k/n),k,0,n-1) ==> gamma(n*x)/((2*%pi)^((1-n)/2)*n^(n*x-1/2))
@@ -113,18 +109,18 @@ homogenize_gamma(e) := block([a,ee : e, keepfloat : true],
 
 /* See http://dlmf.nist.gov/5.4.E3 and http://dlmf.nist.gov/5.4.E4: 
     gamma(1/2 + %i*y)*gamma(1/2-%i*y) = %pi/cosh(%pi*y) 
-    gamma(%iy)*gamma(-%i*y) = %pi/(y * gamma_simp_trigsimp(sinh(%pi * y))) */
+    gamma(%iy)*gamma(-%i*y) = %pi/(y * (sinh(%pi * y))) */
     
 gamma_magnitude_simp(e) :=  block([a, ee : e, y],
    a : map('first, gatherargs(e,'gamma)),
    for ak in a do (
       for bk in a do (
          if equal(ak+bk,1) and equal(realpart(ak),1/2) then (
-            e : ratsubst(gamma_simp_trigsimp(%pi/cosh(%pi*imagpart(ak))), gamma(ak)*gamma(bk),e)),
+            e : ratsubst((%pi/cosh(%pi*imagpart(ak))), gamma(ak)*gamma(bk),e)),
          
          if equal(ak,-bk) and equal(realpart(ak),0) and equal(realpart(bk),0) then (
             y : imagpart(ak),
-            e : ratsubst(%pi/(y * gamma_simp_trigsimp(sinh(%pi * y))), gamma(ak)*gamma(bk),e)))),        
+            e : ratsubst(%pi/(y * (sinh(%pi * y))), gamma(ak)*gamma(bk),e)))),        
       if is(e # ee) then gamma_magnitude_simp(e) else e)$
 
 linearp(e,x) :=  
