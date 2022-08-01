@@ -401,14 +401,16 @@ gamma_simp(1/(x*gamma(x)));
 gamma_simp(gamma(%i * a)*gamma(-%i*a));
 %pi/(a*sinh(%pi*a))$
 
-/* See https://mathematica.stackexchange.com/questions/124546/to-what-extent-can-one-simplify-these-products-of-gamma-functions */
+/* See https://mathematica.stackexchange.com/questions/124546/to-what-extent-can-one-simplify-these-products-of-gamma-functions 
+The denominator of the result vanishes when n=-1 and when n=-3/2. But the input
+isn't defined for either n=-1 or n=-3/2, so I say this is OK.*/
 
 factorial_simp((1/10)*(23 + 10*n)*(1 + n)!*(2 + n)!*(1 + 2*n)!*(3 + 2*n)!*((1/10)*(7 + 10*n))!*
   ((1/10)*(9 + 10*n))!*((1/10)*(11 + 10*n))!*((1/10)*(13 + 10*n))!*((1/10)*(17 + 10*n))!*
   ((1/10)*(19 + 10*n))!*((1/10)*(21 + 10*n))!);
-  (4*n^3+18*n^2+26*n+12)*(n+1)!^2*(2*n+1)!^2*((10*n+17)/10-1)!*((10*n+19)/10-1)!*
-  ((10*n+21)/10-1)!*((10*n+27)/10-1)!*((10*n+29)/10-1)!*((10*n+31)/10-1)!*
-  ((10*n+33)/10-1)!$
+  ((4000*n^4+30800*n^3+88760*n^2+113452*n+54264)*2^(4*n)*(n+1)!^4*
+  ((2*n+5)/2-1)!^2*((10*n+17)/10-1)!^2*((10*n+19)/10-1)!^2*((10*n+21)/10-1)!^2*
+  ((10*n+33)/10-1)!)/(250*%pi*n^2+625*%pi*n+375*%pi)$
 
 /* This test takes a long time. But it did reveal a bug in gamma_simp (that has
    been fixed). So let's keep it.*/
@@ -496,7 +498,7 @@ is(gamma_simp(makegamma(xxx)) = gamma_simp(gamma_simp(makegamma(xxx))));
 true$
 
 gamma_simp(makegamma((6*n)!/(3*n)! =( 1728^n * pochhammer(1/6,n)*pochhammer(1/2,n) 
-* pochhammer(5/6,n))));
+* pochhammer(5/6,n))));
 (2^(6*n)*gamma((6*n+1)/2))/sqrt(%pi)=(1728^n*gamma((6*n+1)/2))/(sqrt(%pi)*3^(3*n))$
 
 /* end pochhammer tests */
@@ -508,7 +510,6 @@ gamma_simp(makegamma(binomial(n,k) - (n/k)* binomial(n-1,k-1)));
 gamma_simp(makegamma(k*binomial(n,k)  = n * binomial(n-1,k-1)));
 gamma(n+1)/(gamma(k)*gamma(n-k+1))=gamma(n+1)/(gamma(k)*gamma(n-k+1))$
 
-
 gamma_simp(gamma(1/2 + %i*3/8)*gamma(1/2-%i*3/8));
 %pi/cosh((3*%pi)/8)$
 
@@ -516,6 +517,10 @@ gamma_simp(gamma(1/2 + %i*3/8)*gamma(1/2-%i*3/8));
 is(gamma_simp(makegamma(pochhammer(a+n,n) = pochhammer(a,2*n)/pochhammer(a,n))));
 true$
 
+/* and more tests */
+
+factorial_simp((1100*(23/10)!*(27/10)!*(29/10)!*(31/10)!)/(8091*(17/10)!*(19/10)!*(21/10)!*(33/10)!));
+1$
 
 /* Clean up */
 (remvalue(X,e,xxx,yyy),killcontext(cntx), remvalue(cntx), 0);

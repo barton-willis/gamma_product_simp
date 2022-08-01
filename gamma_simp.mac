@@ -47,8 +47,9 @@ floats to rationals likely isn't worthwhile.*/
 gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true, 
    inflag : true, radsubstflag : false],
   e : ratsimp_gamma_args(e),
-  e : homogenize_gamma(e),
+  
   e : gamma_arg_increase(gamma_arg_decrease(e)),
+  e : homogenize_gamma(e),
   e : subst("*" = lambda([[q]], gamma_magnitude_simp(xreduce("*",q))),e),
   gamma_product_simp(e)); 
 
@@ -133,11 +134,10 @@ linearp(e,x) :=
 /* Do X*gamma(X) ==> gamma(X+1). Repeat until there are no more such terms. 
    See http://dlmf.nist.gov/5.5.E1 
    
-   We match to X*gamma(X) using ratsubst(g, ak*gamma(ak),e), where g is a
-   gensym. When the result of this substitution is purely linear (not affine)
-   in g, we accept the substitution. The linearity check is suppose to prevent
-   substitutions such as (x+5)*gamma(x) ==> gamma(x+1)+5*gamma(x). This result
-   isn't wrong, but it's not what we want, I think. */
+   To match to X*gamma(X), we divide by the numerical coefficient of X. 
+   This allows matchings to, for example, x*gamma(2*x).  The linearity check is 
+   supposed to prevent substitutions such as (x+5)*gamma(x) ==> gamma(x+1)+5*gamma(x). 
+   This result isn't wrong, but it's not what we want, I think. */
 
 gamma_arg_increase(e) := block([a, ee : e, es, g : gensym(),nf,inflag : false],
   if mapatom(e) then e
