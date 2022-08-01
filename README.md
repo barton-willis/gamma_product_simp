@@ -53,23 +53,23 @@ The functions `gamma_simp` and `factorial_simp` make a good effort to simplify e
 Additionally, `gamma_simp` does not always simplify semantically identical expressions to syntactically identical expressions. That is, `gamma_simp` does not produce a canonical form. An example:
 
 ~~~
-(%i1) load(gamma_simp)$
+(%i1)	load(gamma_simp)$
 
-(%i2) xx : gamma(2*x)/gamma(x)$
+(%i2)	declare(n,integer)$
 
-(%i3) yy : (2^(2*x-1)*gamma(x+1/2))/sqrt(%pi)$
+(%i3)	xx : makegamma(pochhammer(a-n,n));
+(%o3)	gamma(a)/gamma(a-n)
 
-(%i4) gamma_simp(xx);
+(%i4)	yy : makegamma(pochhammer(1-a,n)*(-1)^n);
+(%o4)	((-1)^n*gamma(n-a+1))/gamma(1-a)
 
-(%o4) gamma(2*x)/gamma(x)
-(%i5) gamma_simp(yy);
+(%i5)	gamma_simp(xx) = gamma_simp(yy);
+(%o5)	gamma(a)/gamma(a-n)=((-1)^n*gamma(n-a+1))/gamma(1-a)
 
-(%o5) (2^(2*x-1)*gamma((2*x+1)/2))/sqrt(%pi)
-(%i6) gamma_simp(xx-yy);
-
-(%o6) 0
-
+(%i6)	trigexpand(gamma_simp(xx-yy));
+(%o6)	0
 ~~~
+
 Although the expressions xx and yy are semantically the same (see %o6), `gamma_simp` does not simplify them to identical expressions.
 
 
