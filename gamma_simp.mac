@@ -45,7 +45,7 @@ ratsubst--fixing this bugs that are a result of ratsubst converting
 floats to rationals likely isn't worthwhile.*/
 
 gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true, 
-   inflag : false, radsubstflag : false],
+   inflag : true, radsubstflag : false],
   e : ratsimp_gamma_args(e),
   e : homogenize_gamma(e),
   e : gamma_arg_increase(gamma_arg_decrease(e)),
@@ -137,12 +137,9 @@ linearp(e,x) :=
    gensym. When the result of this substitution is purely linear (not affine)
    in g, we accept the substitution. The linearity check is suppose to prevent
    substitutions such as (x+5)*gamma(x) ==> gamma(x+1)+5*gamma(x). This result
-   isn't wrong, but it's not what we want, I think. 
-   
-   This scheme misses x*gamma(2*x) -> (1/2) * (2x)*gamma(2x) -> (1/2) gamma(2x+1).   
-   */
+   isn't wrong, but it's not what we want, I think. */
 
-gamma_arg_increase(e) := block([a,ee : e, es, g : gensym(),nf],
+gamma_arg_increase(e) := block([a,ee : e, es, g : gensym(),nf,inflag : false],
   if mapatom(e) then e
   elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),
@@ -164,7 +161,7 @@ gamma_simp_complexity(e) := block([],
 
 gamma_arg_decrease(e) := block([a, ee : e,ea],
   if mapatom(e) then e
-  elseif block([inflag : true], mtimesp(e)) then (
+  elseif mtimesp(e) then (
      a : map('first, gatherargs(e,'gamma)),
      for ak in a do (
         ea : ratsubst((ak-1)*gamma(ak-1), gamma(ak),e),

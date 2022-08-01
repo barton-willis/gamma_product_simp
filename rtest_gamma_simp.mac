@@ -499,6 +499,24 @@ gamma_simp(makegamma((6*n)!/(3*n)! =( 1728^n * pochhammer(1/6,n)*pochhammer(1/2,
 * pochhammer(5/6,n))));
 (2^(6*n)*gamma((6*n+1)/2))/sqrt(%pi)=(1728^n*gamma((6*n+1)/2))/(sqrt(%pi)*3^(3*n))$
 
+/* end pochhammer tests */
+
+/* binomial coefficient identities  */
+gamma_simp(makegamma(binomial(n,k) - (n/k)* binomial(n-1,k-1)));
+0$
+
+gamma_simp(makegamma(k*binomial(n,k)  = n * binomial(n-1,k-1)));
+gamma(n+1)/(gamma(k)*gamma(n-k+1))=gamma(n+1)/(gamma(k)*gamma(n-k+1))$
+
+
+gamma_simp(gamma(1/2 + %i*3/8)*gamma(1/2-%i*3/8));
+%pi/cosh((3*%pi)/8)$
+
+/* Tests from Ray Rodgers */
+is(gamma_simp(makegamma(pochhammer(a+n,n) = pochhammer(a,2*n)/pochhammer(a,n))));
+true$
+
+
 /* Clean up */
 (remvalue(X,e,xxx,yyy),killcontext(cntx), remvalue(cntx), 0);
 0$
