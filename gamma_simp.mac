@@ -11,7 +11,8 @@ See LICENSE.md for licensing information.
          gamma_product_simp,homogenize_gamma,gamma_magnitude_simp))$
 
  load("opsubst");
- load("operator_p");
+
+mtimesp(e) := not mapatom(e) and part(e,0) = "*";
 
   /* Return a lambda form that generates the Gauss gamma function 
  product identity; see http://dlmf.nist.gov/5.5.E6 */
