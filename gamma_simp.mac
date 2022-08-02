@@ -119,6 +119,7 @@ gamma_magnitude_simp(e) :=  block([a, ee : e, y],
             e : ratsubst(%pi/(y * (sinh(%pi * y))), gamma(ak)*gamma(bk),e)))),        
       if is(e # ee) then gamma_magnitude_simp(e) else e)$
 
+/* Apply facsum to e with respect to all gamma terms. */
 facsum_gamma_terms(e) := block([a],
   a : map('first, gatherargs(e,'gamma)),
   a : map('gamma, a),
