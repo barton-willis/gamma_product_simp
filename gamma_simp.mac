@@ -42,6 +42,7 @@ gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true,
   e : homogenize_gamma(e),
   e : subst("*" = lambda([[q]], gamma_magnitude_simp(xreduce("*",q))),e),
   e : gamma_product_simp(e),
+  e : facsum_gamma_terms(e),
   e : gamma_arg_increase(gamma_arg_decrease(e)));
 
 /* This function simplifies a product of two or more gamma functions. */
@@ -117,6 +118,12 @@ gamma_magnitude_simp(e) :=  block([a, ee : e, y],
             y : imagpart(ak),
             e : ratsubst(%pi/(y * (sinh(%pi * y))), gamma(ak)*gamma(bk),e)))),        
       if is(e # ee) then gamma_magnitude_simp(e) else e)$
+
+facsum_gamma_terms(e) := block([a],
+  a : map('first, gatherargs(e,'gamma)),
+  a : map('gamma, a),
+  if emptyp(a) then e else (
+     buildq([z : a], lambda([x], facsum(x,splice(z))))(e)));
 
 linearp(e,x) :=  
   polynomialp(e,[x], lambda([q],freeof(x,q)), lambda([q], is(q<=1))) and 

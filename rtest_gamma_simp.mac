@@ -139,7 +139,7 @@ gamma_simp(gamma(-1/4)*gamma(-3/4));
 16*sqrt(2)*%pi/3$
 
 gamma_simp(gamma(2*x)/gamma(x));
-2^(2*x - 1)*gamma(x + 1/2)/sqrt(%pi)$
+(2^(2*x-1)*gamma((2*x+1)/2))/sqrt(%pi)$
 
 (e : (-gamma(k)*gamma(k + 2) + gamma(k + 1)^2)/gamma(k)^2,0);
 0$
@@ -199,7 +199,7 @@ gamma_simp(gamma(2*k)/gamma(k)*gamma(-k - 1/2));
 -((%pi*2^(2*k))/((2*sqrt(%pi)*k+sqrt(%pi))*sin((2*%pi*k+%pi)/2)))$
 
 gamma_simp(gamma(k)*gamma(k + 1/3)*gamma(k + 2/3)/gamma(k*3/2));
-sqrt(%pi)*3^(1/2-3*k)*2^(3*k)*gamma((3*k)/2+1/2)$
+sqrt(%pi)*3^(1/2-3*k)*2^(3*k)*gamma((3*k+1)/2)$
 
 gamma_simp(gamma(1/4)/gamma(5/4));
 4$
@@ -338,7 +338,7 @@ gamma_simp(%pi*x*(x+1/2)*(x+3/2)*gamma(x+1/2));
 %pi*x*gamma((2*x+5)/2)$
 
 gamma_simp(%pi*x*(x+1/28)*(x+3/2)*gamma(x+1/2));
-%pi*x*(x+1/28)*(x+3/2)*gamma((2*x+1)/2)$
+(%pi*x*(2*x+3)*(28*x+1)*gamma((2*x+1)/2))/56$
 
 gamma_simp(x/gamma(x+1) - 1/gamma(x));
 0$
@@ -425,11 +425,12 @@ factorial_simp((1/10)*(23 + 10*n)*(1 + n)!*(2 + n)!*(1 + 2*n)!*(3 + 2*n)!*((1/10
   0$
 
 factor(yyy);
-(%pi^10*k^7*(k+1)*(k+2)*(2*k+1)^4*(2*k+3)^3*(2*k+5)^2*(2*k+7)*
+(%pi^10*(k+1)*(k+2)*(2*k+1)^4*(2*k+3)^3*(2*k+5)^2*(2*k+7)*
 (5*k+13)^3*(5*k+18)^2*(5*k+23)*(10*k+7)^4*(10*k+9)^4*(10*k+11)^4*
 (10*k+13)^4*(10*k+17)^3*(10*k+19)^3*(10*k+21)^3*(10*k+23)^3*(10*k+27)^2*
 (10*k+29)^2*(10*k+31)^2*(10*k+33)^2*(10*k+37)*(10*k+39)*(10*k+41)*(10*k+43)*
-5^(-25*k-56)*gamma(k)^7*gamma((5*(2*k+1))/2)^5*gamma((5*k+13)/5)^4)/(1099511627776)$
+5^(-25*k-56)*gamma(k+1)^7*gamma((5*(2*k+1))/2)^5*gamma((5*k+13)/5)^4)/
+(1099511627776)$
 
 trigrat(gamma_simp(subst(k=1,xxx/yyy)));
 1$
@@ -467,9 +468,8 @@ minfactorial(n!/(n+1)!);
 (cntx : newcontext(), activate(cntx), declare(m,integer),declare(k,integer), declare(n,integer),declare(N,integer), 0);
 0$
 
-/* A better answer is gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)*/
 gamma_simp(makegamma(pochhammer(a,n) = (a+n-1)* pochhammer(a-1,n)/(a-1)));
-gamma(n+a)/(gamma(a-1)*a-gamma(a-1))=gamma(n+a)/(gamma(a-1)*a-gamma(a-1))$
+gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)$
 
 gamma_simp(makegamma(pochhammer(a,n) = (a/(a+n))* pochhammer(a+1,n)));
 gamma(n+a)/gamma(a)=gamma(n+a)/gamma(a)$
