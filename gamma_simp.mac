@@ -39,11 +39,10 @@ floats to rationals likely isn't worthwhile.*/
 gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true, 
    inflag : true, radsubstflag : false],
   e : ratsimp_gamma_args(e),
-  
-  e : gamma_arg_increase(gamma_arg_decrease(e)),
   e : homogenize_gamma(e),
   e : subst("*" = lambda([[q]], gamma_magnitude_simp(xreduce("*",q))),e),
-  gamma_product_simp(e)); 
+  e : gamma_product_simp(e),
+  e : gamma_arg_increase(gamma_arg_decrease(e)));
 
 /* This function simplifies a product of two or more gamma functions. */
  gamma_product_simp(e) := block([a,N,id,ee,dn,fn,keepfloat : true],
