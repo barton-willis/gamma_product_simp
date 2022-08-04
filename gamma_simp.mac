@@ -10,6 +10,7 @@ See LICENSE.md for licensing information.
  eval_when(translate,declare_translated(gamma_arg_increase,gamma_arg_decrease,
          gamma_product_simp,homogenize_gamma,gamma_magnitude_simp))$
 
+/* Load opsubst so we can use gatherargs. */
  load("opsubst");
 
 /* This function is inflag sensitive. */
