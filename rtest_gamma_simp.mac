@@ -195,7 +195,8 @@ gamma(n + 1)*gamma(k + n + x)/(gamma(k + 1)*gamma(n + x)*gamma(-k + n + 1))$
     assert gamma_simp(e*B*A) == gamma_simp(e)*B*A
 */
 
-gamma_simp(gamma(2*k)/gamma(k)*gamma(-k - 1/2));
+/* The setting of algebraic alters the solution a bit */
+block([algebraic : false], gamma_simp(gamma(2*k)/gamma(k)*gamma(-k - 1/2)));
 -((%pi*2^(2*k))/((2*sqrt(%pi)*k+sqrt(%pi))*sin((2*%pi*k+%pi)/2)))$
 
 gamma_simp(gamma(k)*gamma(k + 1/3)*gamma(k + 2/3)/gamma(k*3/2));
