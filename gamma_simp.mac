@@ -35,10 +35,16 @@ functions in this file.
 The function ratsubst does not respect the value of keepfloat--this
 is its documented behavior. The gamma_simp code is a heavy user of
 ratsubst--fixing this bugs that are a result of ratsubst converting
-floats to rationals likely isn't worthwhile.*/
+floats to rationals likely isn't worthwhile. The local assignments
+keepfloat : true don't prevent all float to rational conversions.
+
+When radsubstflag is true, apparently ratsubst sometimes introduces some 
+complex exponentials--as far as I know, the answers are OK, just messy.
+Instead of limiting a users freedom by locally setting radsubstflag to
+false, I'm going to make that setting in the rtest_gamma_simp.*/
 
 gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true, 
-   inflag : true, radsubstflag : false],
+   inflag : true],
   e : ratsimp_gamma_args(e),
   e : homogenize_gamma(e),
   e : subst("*" = lambda([[q]], gamma_magnitude_simp(xreduce("*",q))),e),
@@ -53,7 +59,7 @@ gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true,
     N : length(a),
 
    /* Do gamma(X) gamma(n-X) ==> pochhammer(1-X,n-1) %pi/sin(%pi X), when
-       n is explicitly a nonnegative integer. */
+       n is a declared integer and X isn't a declared integer. */
     for ak in a do (
         for bk in a do (
         dn : ratsimp(ak+bk),
@@ -85,7 +91,7 @@ gamma_simp(e) := block([prederror : false, opsubst : true,keepfloat : true,
     ee : factor(ee),   
     if is(factor(e) # ee) then gamma_product_simp(homogenize_gamma(e)) else e)$
 
-/* When n is a positive integer and the expression e involves both
+/* When n is a declared positive integer and the expression e involves both
    gamma(X+n) and gamma(X), do gamma(X+n) ==> pochhammer(X,n) gamma(X).
    The expansion of the pochhammer term is controlled by the option variable
    pochhammer_max_index (default 100). If the expression e changes after finishing

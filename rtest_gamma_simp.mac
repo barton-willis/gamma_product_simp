@@ -68,7 +68,7 @@ DAMAGE.
 */
 
 (load("gamma_simp"),%piargs : true, ratfac : true, domain : real,m1pbranch : false, 
-reset(float_approx_equal_tolerance), 0);
+radsubstflag : false, reset(float_approx_equal_tolerance), 0);
 0$
 
 gamma_simp(gamma(x));
