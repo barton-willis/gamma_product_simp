@@ -14,8 +14,6 @@ load("isequal.lisp");
 mtimesp(e) := not mapatom(e) and part(e,0) = "*";
 mplusp(e) := not mapatom(e) and part(e,0) = "+";
 
-isequal(a,b) := ?meqp(a,b) = true;
-
 mysubst(new,old,e) := block([inflag : true, q, prederror : false,listconstvars : false],
  
   if mapatom(e) then (
