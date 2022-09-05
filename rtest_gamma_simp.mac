@@ -66,7 +66,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 
 */
-
+/* Let's attempt to limit the number of failures that are due to the value
+   of various option variables. */
 (load("gamma_simp"),%piargs : true, ratfac : true, domain : real,m1pbranch : false, 
 radsubstflag : false, reset(float_approx_equal_tolerance), 0);
 0$
